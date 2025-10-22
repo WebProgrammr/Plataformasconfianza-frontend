@@ -1,0 +1,22 @@
+// src/app/pages/dashboard-page/user-dashboard/user-dashboard.scss
+/* Puedes añadir estilos específicos para el dashboard aquí si necesitas diferenciarlo del admin */
+.dashboard-layout {
+  // Ejemplo: quizás un fondo diferente
+  // background-color: #1a1a1a;
+}
+
+.dashboard-sidebar {
+  // Estilos específicos del sidebar del dashboard
+}
+
+.dashboard-content {
+  // Ajustes para el contenido principal del dashboard
+  // Por ejemplo, quitar el padding-top si el navbar ya no interfiere
+  padding-top: 2rem; // O ajustarlo según el diseño final
+}
+
+// Asegurar que los íconos tengan espacio
+.admin-menu a i {
+  width: 20px; // Ancho fijo para alineación
+  text-align: center;
+}

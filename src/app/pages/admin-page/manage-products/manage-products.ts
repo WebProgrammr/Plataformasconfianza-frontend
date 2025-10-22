@@ -1,9 +1,15 @@
+// src/app/pages/admin-page/manage-products/manage-products.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { ProductoService } from '../../../services/producto';
 import { Producto, SaveProducto } from '../../../core/models/producto.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmDialog } from '../../../shared/dialogs/confirm-dialog/confirm-dialog';
+import { ProductoDialog } from '../../../shared/dialogs/producto-dialog/producto-dialog';
 
 @Component({
   selector: 'app-manage-products',
@@ -11,7 +17,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './manage-products.html',
   styleUrls: ['./manage-products.scss']
@@ -19,37 +28,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ManageProducts implements OnInit {
 
   productos: Producto[] = [];
-  productForm!: FormGroup;
-  
   isLoading = true;
-  isModalOpen = false;
-  isEditMode = false;
-  selectedProductId: number | null = null;
-  
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
   constructor(
     private productoService: ProductoService,
-    private fb: FormBuilder
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.cargarProductos();
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.productForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.maxLength(100)]],
-      descripcion: ['', [Validators.maxLength(500)]],
-      precio: [0, [Validators.required, Validators.min(0.01)]],
-      imagenUrl: ['', [Validators.maxLength(255)]]
-    });
   }
 
   cargarProductos(): void {
     this.isLoading = true;
+    this.errorMessage = null;
+    this.successMessage = null;
     this.productoService.getProductosAdmin().subscribe({
       next: (data: Producto[]) => {
         this.productos = data;
@@ -62,67 +57,63 @@ export class ManageProducts implements OnInit {
     });
   }
 
-  abrirModal(producto?: Producto): void {
-    this.errorMessage = null;
-    this.successMessage = null;
-    this.isModalOpen = true;
+  abrirModalProducto(producto?: Producto): void {
+    const dialogRef = this.dialog.open(ProductoDialog, {
+      width: '500px',
+      disableClose: true,
+      data: producto ? { ...producto } : null
+      // SIN panelClass
+    });
 
-    if (producto) {
-      this.isEditMode = true;
-      this.selectedProductId = producto.id;
-      this.productForm.patchValue(producto);
-    } else {
-      this.isEditMode = false;
-      this.selectedProductId = null;
-      this.productForm.reset({ precio: 0 });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.guardarProducto(result, producto?.id);
+      }
+    });
   }
 
-  cerrarModal(): void {
-    this.isModalOpen = false;
-    this.productForm.reset({ precio: 0 });
-  }
 
-  guardarProducto(): void {
-    if (this.productForm.invalid) {
-      this.productForm.markAllAsTouched();
-      return;
-    }
-
+  guardarProducto(payload: SaveProducto, id?: number): void {
     this.errorMessage = null;
     this.successMessage = null;
-    const payload: SaveProducto = this.productForm.value;
 
-    if (this.isEditMode && this.selectedProductId) {
-      this.productoService.actualizarProducto(this.selectedProductId, payload).subscribe({
+    const action = id
+      ? this.productoService.actualizarProducto(id, payload)
+      : this.productoService.crearProducto(payload);
+
+    const successMsg = id ? 'Producto actualizado' : 'Producto creado';
+    const errorMsg = id ? 'Error al actualizar' : 'Error al crear';
+
+    action.subscribe({
         next: () => {
-          this.successMessage = 'Producto actualizado exitosamente.';
-          this.cerrarModal();
+          this.successMessage = `${successMsg} exitosamente.`;
           this.cargarProductos();
         },
         error: () => {
-          this.errorMessage = 'Error al actualizar el producto.';
+          this.errorMessage = `${errorMsg} el producto.`;
         }
       });
-    } else {
-      this.productoService.crearProducto(payload).subscribe({
-        next: () => {
-          this.successMessage = 'Producto creado exitosamente.';
-          this.cerrarModal();
-          this.cargarProductos();
-        },
-        error: () => {
-          this.errorMessage = 'Error al crear el producto.';
-        }
-      });
-    }
+  }
+
+  confirmarEliminar(id: number, nombre: string): void {
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      disableClose: true,
+      data: {
+        title: 'Confirmar Eliminación',
+        message: `¿Estás seguro de que quieres eliminar el producto "${nombre}"? Esta acción no se puede deshacer.`
+      }
+      // SIN panelClass
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.eliminarProducto(id);
+      }
+    });
   }
 
   eliminarProducto(id: number): void {
-    if (!confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-      return;
-    }
-
     this.errorMessage = null;
     this.successMessage = null;
 

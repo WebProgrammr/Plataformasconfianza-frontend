@@ -1,3 +1,4 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { Home } from './pages/client-page/home/home';
 import { Resenas } from './pages/client-page/resenas/resenas';
@@ -11,45 +12,44 @@ import { AdminGuard } from './core/guards/admin-guard';
 import { DejarResena } from './pages/client-page/dejar-resena/dejar-resena';
 import { Servicios } from './pages/client-page/servicios/servicios';
 
-// Importamos el nuevo Guardián
-import { DistributorGuard } from './core/guards/distributor-guard';
+// --- NUEVOS IMPORTS ---
+import { UserDashboard } from './pages/dashboard-page/user-dashboard/user-dashboard'; // Layout principal del dashboard
+import { DashboardHome } from './pages/dashboard-page/dashboard-home/dashboard-home'; // Vista principal del dashboard
+import { RecargaSaldo } from './pages/dashboard-page/recarga-saldo/recarga-saldo'; // Componente de recarga
 
-// 1. Importamos el nuevo componente de Layout
-import { DistributorDashboard } from './pages/distributor-page/distributor-dashboard/distributor-dashboard';
-// 2. Importamos el primer componente funcional del distribuidor
-import { DistributorCommissions } from './pages/distributor-page/distributor-commissions/distributor-commissions';
+// Ya no necesitamos DistributorGuard ni los componentes de distribuidor
+// import { DistributorGuard } from './core/guards/distributor-guard';
+// import { DistributorDashboard } from './pages/distributor-page/distributor-dashboard/distributor-dashboard';
+// import { DistributorCommissions } from './pages/distributor-page/distributor-commissions/distributor-commissions';
 
 
 export const routes: Routes = [
+  // --- Rutas Públicas ---
   { path: '', component: Home, title: 'Inicio - Plataforma Confianza' },
   { path: 'servicios', component: Servicios, title: 'Nuestros Servicios' },
   { path: 'resenas', component: Resenas, title: 'Reseñas de Clientes' },
-  { path: 'escribir-resena', component: DejarResena, canActivate: [AuthGuard], title: 'Dejar una Reseña' },
   { path: 'login', component: Login, title: 'Iniciar Sesión' },
   { path: 'register', component: Register, title: 'Registro de Usuario' },
-  
-  // --- RUTAS DE DISTRIBUIDOR (PROTEGIDAS) ---
+
+  // --- Rutas Protegidas (Requieren Login) ---
+  { path: 'escribir-resena', component: DejarResena, canActivate: [AuthGuard], title: 'Dejar una Reseña' },
+
+  // --- NUEVO PANEL DE CONTROL UNIFICADO ---
   {
-    path: 'distribuidor',
-    component: DistributorDashboard, // Layout principal
-    canActivate: [DistributorGuard], // ¡Protegido por el nuevo Guard!
-    title: 'Panel de Distribuidor',
+    path: 'dashboard',
+    component: UserDashboard, // Carga el layout del dashboard
+    canActivate: [AuthGuard], // Protegido por login general
+    title: 'Mi Panel',
     children: [
-      {
-        path: 'comisiones',
-        component: DistributorCommissions,
-        title: 'Distribuidor | Comisiones'
-      },
-      // Redirección por defecto si solo acceden a /distribuidor
-      {
-        path: '',
-        redirectTo: 'comisiones',
-        pathMatch: 'full'
-      }
+      { path: '', component: DashboardHome, title: 'Dashboard' }, // Ruta por defecto (/dashboard)
+      { path: 'recarga', component: RecargaSaldo, title: 'Recargar Saldo' },
+      // --- Placeholder para futuras rutas ---
+      // { path: 'pedidos', component: MisPedidos, title: 'Mis Pedidos' },
+      // { path: 'productos', component: GestionProductosDist, canActivate: [DistributorGuard], title: 'Gestionar Productos (Dist)' }, // Ejemplo ruta solo para distribuidor
     ]
   },
 
-  // --- RUTAS DE ADMINISTRADOR (PROTEGIDAS) ---
+  // --- Rutas de Administrador (Protegidas por AdminGuard) ---
   {
     path: 'admin',
     component: AdminDashboard,
@@ -61,7 +61,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
     ]
   },
-  
-  // --- Ruta Wildcard ---
+
+  // --- Ruta Wildcard (Al final) ---
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

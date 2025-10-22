@@ -1,4 +1,3 @@
-// Importamos los estilos comunes de la tabla que usamos en ApproveUsers
 @import '../approve-users/approve-users.scss';
 
 .page-header {
@@ -6,130 +5,120 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-}
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
 
-.btn-primary {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  h2 {
+    color: var(--text-glow); /* Título más brillante */
+    font-weight: 500;
+  }
 
-  &:hover {
-    background-color: #0056b3;
+  button[mat-raised-button] {
+     line-height: 36px;
+     padding: 0 16px;
+  }
+
+  mat-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
   }
 }
 
-.btn-secondary {
-  @extend .btn-primary;
-  background-color: #6c757d;
-
-  &:hover {
-    background-color: #5a6268;
-  }
+/* Contenedor para la tabla con bordes redondeados y fondo */
+.table-container {
+    border-radius: 12px;
+    overflow: hidden; /* Necesario para que el border-radius afecte a la tabla */
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px var(--shadow-color-medium);
+    margin-bottom: 2rem;
 }
+
 
 .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent; /* Hereda del contenedor */
+
+  th, td {
+    padding: 14px 18px; /* Un poco más de padding */
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+     font-size: 0.8rem;
+     font-weight: 600; /* Un poco más bold */
+     color: var(--text-secondary);
+     background-color: var(--bg-surface-hover);
+     text-transform: uppercase;
+     letter-spacing: 0.8px; /* Más espaciado */
+     border-bottom: 2px solid var(--border-color-light); /* Borde inferior más grueso */
+  }
+
+  td {
+     font-size: 0.9rem; /* Texto un poco más pequeño */
+     color: var(--text-primary);
+  }
+
+  .desc-column {
+     width: 40%;
+  }
+
   .desc-cell {
-    max-width: 300px;
+    max-width: 350px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--text-secondary);
   }
 
   .actions-cell {
-    display: flex;
-    gap: 0.5rem;
-  }
+    white-space: nowrap;
+    width: 1%;
+    text-align: right;
 
-  .btn-edit {
-    @extend .btn-approve;
-    background-color: #ffc107;
-    
-    &:hover {
-      background-color: #e0a800;
+    button[mat-icon-button] {
+        margin-left: 8px; /* Más espacio entre iconos */
+        width: 36px; /* Ligeramente más pequeños */
+        height: 36px;
+        line-height: 36px;
+        mat-icon {
+          font-size: 20px; /* Tamaño del icono */
+          height: 20px;
+          width: 20px;
+        }
     }
+
+     button[mat-icon-button][color="primary"] {
+        color: var(--primary-color-light);
+     }
+
+     button[mat-icon-button][color="warn"] {
+        color: var(--danger-color);
+     }
+
+     button[mat-icon-button]:hover {
+        background-color: var(--bg-surface-hover); /* Fondo hover */
+     }
   }
 
-  .btn-delete {
-    @extend .btn-approve;
-    background-color: #dc3545;
-
-    &:hover {
-      background-color: #c82333;
-    }
+  tbody tr:last-child td {
+    border-bottom: none; /* Sin borde en la última fila */
   }
-}
 
-// Estilos del Modal
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: 90%;
-  max-width: 500px;
-  z-index: 1001;
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+   tbody tr:hover {
+     background-color: var(--bg-surface-hover); /* Hover sutil en fila */
   }
 }
 
-.form-group {
-  margin-bottom: 1rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #555;
-  }
-
-  input[type="text"],
-  input[type="number"],
-  textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-
-  textarea {
-    resize: vertical;
-  }
-}
-
-.field-error small {
-  color: #dc3545;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  display: block;
-}
-
-.form-actions {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
+/* Mensaje si no hay productos */
+.message.info {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
 }

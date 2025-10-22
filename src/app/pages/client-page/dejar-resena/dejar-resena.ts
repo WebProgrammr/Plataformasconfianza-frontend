@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router'; // RouterLink ya no es necesario aquí
 import { ResenaService } from '../../../services/resena';
 import { SaveResena } from '../../../core/models/resena.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,8 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
+    // RouterLink // Removido
   ],
   templateUrl: './dejar-resena.html',
   styleUrls: ['./dejar-resena.scss']

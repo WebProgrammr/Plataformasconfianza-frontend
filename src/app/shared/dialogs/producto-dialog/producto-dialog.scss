@@ -1,10 +1,100 @@
 /* src/app/shared/dialogs/producto-dialog/producto-dialog.scss */
+
+/* Contenedor principal del diálogo */
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 15px !important;
+  border: 1px solid var(--border-glow-color) !important;
+  box-shadow: 0 0 25px var(--info-glow), 0 5px 30px var(--shadow-color-strong) !important;
+  background: radial-gradient(circle at top left, rgba(13, 202, 240, 0.1), transparent 50%),
+              radial-gradient(circle at bottom right, rgba(13, 110, 253, 0.1), transparent 50%),
+              var(--bg-surface) !important;
+}
+
+/* Título */
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
+  color: var(--info-color) !important; /* Color cyan */
+  font-weight: 500;
+  text-align: center;
+  border-bottom: 1px solid var(--border-glow-color) !important; /* Borde cyan */
+  margin-bottom: 2rem !important;
+  padding-bottom: 1rem !important;
+}
+
+/* Contenido (elementos dentro del <mat-dialog-content>) */
+mat-dialog-content {
+  padding-top: 10px;
+}
+
+/* Campos de formulario (elementos dentro del <mat-dialog-content>) */
 .full-width {
   width: 100%;
   margin-bottom: 1rem; /* Espacio entre campos */
 }
 
-mat-dialog-content {
-  min-width: 300px; /* Ancho mínimo del contenido */
-  max-width: 500px; /* Ancho máximo */
+/* Estilos específicos para campos Material DENTRO de ESTE diálogo */
+:host ::ng-deep .mat-mdc-form-field {
+  /* Label activo */
+  &.mat-focused .mat-mdc-floating-label {
+      color: var(--info-color) !important; /* Cyan */
+  }
+   /* Cursor */
+  .mat-mdc-input-element {
+     caret-color: var(--info-color) !important; /* Cyan */
+  }
+  /* Borde activo */
+  &.mat-focused .mdc-notched-outline > * {
+    border-color: var(--info-color) !important; /* Cyan */
+    box-shadow: 0 0 5px var(--info-glow); /* Sombra cyan */
+  }
+   /* Línea activa (si aplica) */
+   &.mat-focused .mat-mdc-form-field-ripple::after {
+      background-color: var(--info-color) !important; /* Cyan */
+   }
+   /* Borde inactivo */
+   .mdc-notched-outline > * {
+      border-color: var(--border-color-light) !important;
+   }
+   .mat-mdc-form-field-bottom-align::before {
+     background-color: var(--border-color-light) !important;
+   }
+    /* Placeholder y Label inactivo (Hereda de styles.scss base) */
+}
+
+textarea[matInput] {
+    line-height: 1.5;
+    min-height: 90px;
+}
+
+/* Acciones (elementos dentro de <mat-dialog-actions>) */
+mat-dialog-actions {
+  padding-top: 15px;
+  justify-content: flex-end;
+}
+/* Separador de acciones personalizado */
+:host ::ng-deep .mat-mdc-dialog-actions {
+  border-top: 1px solid var(--border-glow-color) !important;
+  margin-top: 2rem !important;
+  padding-top: 15px !important;
+}
+
+/* Botones (elementos dentro de <mat-dialog-actions>) */
+button[mat-button] {
+  color: var(--text-secondary);
+  border-radius: 50rem;
+  padding: 0 16px;
+  line-height: 36px;
+  &:hover {
+    color: var(--info-color);
+    background-color: rgba(13, 202, 240, 0.1);
+  }
+}
+
+button[mat-raised-button][color="primary"] {
+  border-radius: 50rem;
+  background-color: var(--info-color) !important; /* Botón principal cyan */
+  color: var(--bg-primary) !important; /* Texto oscuro en botón cyan */
+   &:hover:not(:disabled) {
+     box-shadow: 0 5px 15px var(--info-glow) !important;
+     filter: brightness(1.1);
+   }
 }

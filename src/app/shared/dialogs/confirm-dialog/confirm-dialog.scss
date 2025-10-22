@@ -1,0 +1,58 @@
+/* src/app/shared/dialogs/confirm-dialog/confirm-dialog.scss */
+
+/* Estilos específicos para el contenedor del diálogo */
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 15px !important;
+  border: 1px solid var(--danger-color) !important;
+  box-shadow: 0 0 20px rgba(220, 53, 69, 0.4), 0 5px 30px var(--shadow-color-strong) !important;
+  background: radial-gradient(circle at center, rgba(220, 53, 69, 0.1), transparent 60%),
+              var(--bg-surface) !important;
+}
+
+/* Título */
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
+  color: var(--danger-color) !important;
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(220, 53, 69, 0.3) !important;
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.8rem !important;
+}
+
+/* Contenido */
+mat-dialog-content p {
+ color: var(--text-secondary);
+ line-height: 1.6;
+ text-align: center;
+ margin-bottom: 0.5rem;
+}
+
+/* Acciones */
+mat-dialog-actions {
+    padding-top: 10px;
+    margin-top: 1.5rem;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Botones */
+button[mat-button] {
+  color: var(--text-secondary);
+  border-radius: 50rem;
+  padding: 0 20px;
+  line-height: 36px;
+  border: 1px solid var(--border-color);
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-surface-hover);
+    border-color: var(--border-color-light);
+  }
+}
+
+button[mat-raised-button][color="warn"] {
+  border-radius: 50rem;
+  padding: 0 20px;
+  line-height: 36px;
+  /* Colores base heredados */
+}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router'; // RouterOutlet Removido
 import { AuthService } from '../../services/auth';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
+    // RouterOutlet, // Removido
     RouterLink,
     RouterLinkActive
   ],
@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth';
 export class Navbar {
 
   constructor(
-    public authService: AuthService, 
+    public authService: AuthService,
     private router: Router
   ) {}
 

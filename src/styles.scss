@@ -1,52 +1,338 @@
-/* Import Bootstrap */
-@use 'bootstrap/scss/bootstrap'; // Cambiado de @import a @use
-/* Import Bootstrap Icons */
-@use 'bootstrap-icons/font/bootstrap-icons.css'; // Cambiado de @import a @use
-/* Import Angular Material theme */
-@use '@angular/material/prebuilt-themes/indigo-pink.css'; // Cambiado de @import a @use
+/* src/styles.scss */
+@use 'bootstrap/scss/bootstrap';
+@use 'bootstrap-icons/font/bootstrap-icons.css';
+@use '@angular/material/prebuilt-themes/indigo-pink.css';
 
-/* Basic global styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, sans-serif; /* Example font */
-  margin: 0;
-}
-
 html, body {
   height: 100%;
 }
 
-/* Importar Bootstrap (ya deberías tenerlo de la instalación) */
-@import "bootstrap/scss/bootstrap";
-
-/*
- * 1. TEMA OSCURO GLOBAL
- * Usamos variables de CSS para manejar el tema fácilmente.
- */
 :root {
---bg-primary: #121212;
-  --bg-surface: #1e1e1e;
+  --bg-primary: #0a0a0f;
+  --bg-surface: #14141c;
+  --bg-surface-hover: #1f1f29;
+  --bg-surface-light: #1a1a23;
+  --bg-glow: rgba(45, 53, 64, 0.7);
+
   --text-primary: #e0e0e0;
-  --text-secondary: #aaaaaa;
+  --text-secondary: #9a9aaf;
+  --text-on-primary: #ffffff;
+  --text-glow: #f0f0f0;
+
+  --border-color: #2a2a3a;
+  --border-color-light: #444454;
+  --border-glow-color: rgba(13, 202, 240, 0.5);
+
   --primary-color: #0d6efd;
-  --border-color: #333;
+  --primary-color-light: #3b82f6;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --success-glow: rgba(25, 135, 84, 0.5);
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #0dcaf0;
+  --info-glow: rgba(13, 202, 240, 0.5);
+
   --primary-glow: rgba(13, 110, 253, 0.5);
+  --shadow-color-soft: rgba(0, 0, 0, 0.3);
+  --shadow-color-medium: rgba(0, 0, 0, 0.4);
+  --shadow-color-strong: rgba(0, 0, 0, 0.5);
+
+  --scrollbar-track-bg: var(--bg-surface);
+  --scrollbar-thumb-bg: #444;
+  --scrollbar-thumb-hover-bg: #666;
 }
 
 body {
   background-color: var(--bg-primary) !important;
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   scroll-behavior: smooth;
+  margin: 0;
+}
+body.mat-typography {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: 10px;
+  border: 2px solid var(--scrollbar-track-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-bg);
+}
 
-/* Animación de "fade in" (ya la teníamos) */
+.glow-border {
+  border: 1px solid var(--border-glow-color);
+  box-shadow: 0 0 8px var(--border-glow-color), inset 0 0 5px rgba(13, 202, 240, 0.2);
+}
+.glow-border-hover:hover {
+  border-color: var(--info-color);
+  box-shadow: 0 0 15px var(--info-glow), inset 0 0 10px rgba(13, 202, 240, 0.3);
+}
+
+@keyframes border-gradient-flow {
+  0% { border-color: var(--primary-color); }
+  50% { border-color: var(--info-color); }
+  100% { border-color: var(--primary-color); }
+}
+.animated-border {
+  border: 2px solid;
+  animation: border-gradient-flow 4s linear infinite;
+}
+
+.btn-primary, .btn-primary-gradient, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-secondary,
+button[mat-raised-button], button[mat-flat-button] {
+  transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, filter 0.3s ease !important;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50rem;
+  font-weight: 500;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.1);
+  }
+  &:active:not(:disabled) {
+     transform: translateY(0px) scale(0.98);
+     box-shadow: none;
+     filter: brightness(0.9);
+  }
+}
+
+.btn-primary { background-color: var(--primary-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--primary-glow); } }
+.btn-success { background-color: var(--success-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--success-glow); } }
+.btn-danger { background-color: var(--danger-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4); } }
+.btn-warning { background-color: var(--warning-color); color: #000; &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4); } }
+.btn-info { background-color: var(--info-color); color: #000; &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--info-glow); } }
+.btn-secondary { background-color: var(--secondary-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4); } }
+
+.btn-outline-light {
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50rem;
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+    &:hover {
+        color: var(--text-glow);
+        background-color: var(--bg-surface-hover);
+        border-color: var(--border-color-light);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px) scale(1.02);
+    }
+     &:active:not(:disabled) {
+         transform: translateY(0px) scale(0.98);
+         box-shadow: none;
+     }
+}
+.btn-outline-primary {
+      color: var(--primary-color-light);
+      border: 1px solid var(--primary-color);
+      border-radius: 50rem;
+      transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+      &:hover {
+        background-color: rgba(13, 110, 253, 0.1);
+        color: var(--primary-color-light);
+        border-color: var(--primary-color-light);
+        box-shadow: 0 0 10px var(--primary-glow);
+        transform: translateY(-2px) scale(1.02);
+      }
+      &:active:not(:disabled) {
+         transform: translateY(0px) scale(0.98);
+         box-shadow: none;
+      }
+}
+
+.form-control, .form-select {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.8rem 1rem;
+  &:focus {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--info-color);
+    box-shadow: 0 0 8px var(--info-glow);
+  }
+  &::placeholder {
+     color: var(--text-secondary) !important;
+     opacity: 0.5 !important;
+  }
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--bg-surface) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    caret-color: var(--text-primary) !important;
+}
+.input-group-text {
+  background-color: var(--bg-surface-hover);
+  border: 1px solid var(--border-color);
+  color: var(--info-color);
+  border-radius: 8px 0 0 8px;
+}
+select option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.table-responsive, .table-container {
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px var(--shadow-color-medium);
+}
+.table {
+  color: var(--text-primary);
+  border-collapse: separate;
+  border-spacing: 0;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--border-color);
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+  --bs-table-hover-bg: rgba(13, 202, 240, 0.05);
+}
+.table thead th {
+  color: var(--text-secondary);
+  background-color: rgba(44, 62, 80, 0.5);
+  border-bottom: 2px solid var(--border-color-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.table tbody tr {
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+}
+.table > :not(caption) > * > * {
+    border-bottom-width: 1px;
+    border-color: var(--border-color);
+    padding: 1rem 1.25rem;
+}
+.table tbody tr:last-child td {
+   border-bottom: 0;
+}
+
+/* --- Base Dark Theme para Diálogos de Material --- */
+/* Solo fondo, color base y radio base */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border-radius: 8px !important;
+}
+/* Color base del título */
+.mat-mdc-dialog-container .mdc-dialog__title {
+  color: var(--text-primary) !important;
+}
+/* Color base del contenido */
+.mat-mdc-dialog-content {
+   color: var(--text-secondary);
+}
+
+/* --- Base Dark Theme para Campos de Formulario Material (FUNCIONAL) --- */
+.mat-mdc-form-field {
+  /* Color del Label/Placeholder (cuando no está flotando o no enfocado) */
+  .mat-mdc-form-field-label,
+  .mat-mdc-floating-label:not(.mdc-floating-label--float-above),
+  input::placeholder,
+  textarea::placeholder,
+  .mat-mdc-select-placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.7 !important;
+  }
+
+  /* Color del Label flotante enfocado */
+  &.mat-focused .mat-mdc-floating-label {
+    color: var(--primary-color-light) !important; /* Azul claro por defecto */
+    opacity: 1 !important;
+  }
+
+  /* Color del texto del input */
+  .mat-mdc-input-element,
+  .mat-mdc-select-value {
+    color: var(--text-primary) !important;
+    caret-color: var(--primary-color-light); /* Cursor */
+  }
+
+  /* Color del borde/línea inactivo */
+  .mdc-notched-outline > *,
+  .mat-mdc-form-field-underline::before, /* Para Standard/Fill */
+  .mat-mdc-form-field-bottom-align::before { /* Para Standard/Fill */
+    border-color: var(--border-color) !important;
+    background-color: var(--border-color) !important; /* Solo para línea */
+  }
+
+  /* Color del borde/línea enfocado */
+  &.mat-focused .mdc-notched-outline > * {
+    border-color: var(--primary-color-light) !important;
+    border-width: 2px !important;
+  }
+  &.mat-focused .mat-mdc-form-field-ripple::after { /* Para Standard/Fill */
+    background-color: var(--primary-color-light) !important;
+  }
+
+  /* Flecha del Select */
+  .mat-mdc-select-arrow svg {
+    color: var(--text-secondary) !important;
+  }
+
+  /* Color del mensaje de error */
+  .mat-mdc-form-field-error {
+     color: var(--danger-color) !important;
+     opacity: 0.9;
+  }
+}
+
+/* --- Botones Material (Estilos base oscuros) --- */
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: var(--primary-color);
+  --mdc-protected-button-label-text-color: var(--text-on-primary);
+  &:hover:not(:disabled) { background-color: var(--primary-color-light); box-shadow: 0 5px 15px var(--primary-glow); filter: brightness(1.1); }
+}
+.mat-mdc-raised-button.mat-warn {
+  --mdc-protected-button-container-color: var(--danger-color);
+  --mdc-protected-button-label-text-color: var(--text-on-primary);
+   &:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4); }
+}
+.mat-mdc-button.mat-unthemed, button[mat-button] {
+   color: var(--text-secondary);
+   border-radius: 50rem;
+   &:hover:not(:disabled) {
+      background-color: var(--bg-surface-hover);
+      color: var(--text-primary);
+   }
+}
+button[mat-icon-button] {
+   color: var(--text-secondary);
+   border-radius: 50%;
+    &:hover:not(:disabled) {
+      background-color: var(--bg-surface-hover);
+      color: var(--text-primary);
+   }
+}
+button[mat-button] mat-icon, button[mat-raised-button] mat-icon, button[mat-icon-button] mat-icon {
+   color: inherit;
+}
+
+/* --- Animaciones --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -55,7 +341,6 @@ body {
   animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Animación de "pulso" (ya la teníamos) */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -65,20 +350,8 @@ body {
   animation: pulse 1.5s infinite ease-in-out;
 }
 
-/* Nueva Animación de Fondo de Gradiente */
 @keyframes gradient-flow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-.btn-primary, .btn-outline-light, .btn-outline-danger, .btn-primary-gradient {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out !important; // !important para sobreescribir Bootstrap
-
-  &:hover:not(:disabled) {
-    transform: scale(1.03); // Ligeramente más grande
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Sombra sutil
-  }
-  &:active:not(:disabled) {
-     transform: scale(0.98); // Ligeramente más pequeño al hacer clic
-  }
 }

@@ -1,6 +1,6 @@
 .admin-page h2 {
   font-size: 2rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 2rem;
 }
 
@@ -12,58 +12,85 @@
 }
 
 .loading {
-  background-color: #eee;
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
 }
 
 .message.info {
-  background-color: #e0f7fa;
-  color: #007bff;
+  background-color: rgba(13, 202, 240, 0.1);
+  color: var(--info-color);
+  border: 1px solid var(--info-color);
 }
 
 .message.error {
-  background-color: #fbe9e7;
-  color: #d32f2f;
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--danger-color);
+   border: 1px solid var(--danger-color);
 }
 
 .message.success {
-  background-color: #e8f5e9;
-  color: #388e3c;
+   background-color: rgba(25, 135, 84, 0.1);
+  color: var(--success-color);
+   border: 1px solid var(--success-color);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: var(--bg-surface);
+  box-shadow: 0 4px 12px var(--shadow-color-soft);
+  color: var(--text-primary);
 
   th, td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
   }
 
   th {
-    background-color: #f9f9f9;
+    background-color: var(--bg-surface-hover);
     font-weight: bold;
-    color: #555;
+    color: var(--text-primary);
   }
 
   td {
-    color: #333;
+    color: var(--text-secondary);
+  }
+
+  tbody tr:hover {
+     background-color: var(--bg-surface-hover); /* Añadir hover a filas */
   }
 }
 
 .btn-approve {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  color: #fff;
-  background-color: #28a745;
+  color: var(--text-on-primary);
+  background-color: var(--success-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, filter 0.3s ease; /* Añadir filter a transition */
 
   &:hover {
-    background-color: #218838;
+    // background-color: darken(var(--success-color), 10%); /* ERROR */
+    filter: brightness(0.9); /* Alternativa para oscurecer */
   }
+}
+
+.btn-edit {
+  @extend .btn-approve;
+  background-color: var(--warning-color);
+  color: #000;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.btn-delete {
+   @extend .btn-approve;
+   background-color: var(--danger-color);
+   &:hover {
+     filter: brightness(0.9);
+   }
 }
