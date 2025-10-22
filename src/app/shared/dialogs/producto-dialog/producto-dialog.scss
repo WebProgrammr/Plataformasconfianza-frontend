@@ -1,100 +1,305 @@
 /* src/app/shared/dialogs/producto-dialog/producto-dialog.scss */
 
-/* Contenedor principal del diálogo */
+// Importar fuente Orbitron (si no está globalmente). Añadir esto a styles.scss o index.html si es necesario:
+// @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
+
+// Keyframes para animaciones mejoradas
+@keyframes dialog-entry-anim {
+  from { opacity: 0; transform: scale(0.95) translateY(-15px); filter: blur(4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+@keyframes title-glow-anim {
+  0%, 100% { text-shadow: 0 0 10px var(--info-glow), 0 0 2px var(--info-color), 0 0 20px var(--info-glow), 0 0 30px var(--info-glow); opacity: 0.95; }
+  50% { text-shadow: 0 0 15px var(--info-glow), 0 0 3px var(--info-color), 0 0 25px var(--info-glow), 0 0 40px var(--info-glow); opacity: 1; }
+}
+
+@keyframes input-focus-line-glow {
+  from { box-shadow: 0 0 5px var(--info-glow); }
+  to { box-shadow: 0 0 12px var(--info-glow), 0 0 3px var(--info-color); }
+}
+
+
+@keyframes button-primary-glow-anim {
+   0%, 100% { box-shadow: 0 0 15px var(--info-glow), 0 0 5px var(--info-color); transform: scale(1); }
+   50% { box-shadow: 0 0 25px var(--info-glow), 0 0 40px var(--info-glow), 0 0 8px var(--info-color); transform: scale(1.02); }
+}
+
+
+/* Contenedor principal del diálogo - Rediseño Futurista Avanzado */
 :host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
-  border-radius: 15px !important;
-  border: 1px solid var(--border-glow-color) !important;
-  box-shadow: 0 0 25px var(--info-glow), 0 5px 30px var(--shadow-color-strong) !important;
-  background: radial-gradient(circle at top left, rgba(13, 202, 240, 0.1), transparent 50%),
-              radial-gradient(circle at bottom right, rgba(13, 110, 253, 0.1), transparent 50%),
-              var(--bg-surface) !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--info-color-rgb), 0.7) !important;
+  box-shadow: 0 0 60px rgba(var(--info-color-rgb), 0.5), 5px 5px 30px rgba(0,0,0,0.7) !important;
+  background:
+    radial-gradient(circle farthest-side at 0% 50%,rgba(var(--border-color-rgb),.2) 23.5%,rgba(0,0,0,0) 0) 21px 30px,
+    radial-gradient(circle farthest-side at 0% 50%,rgba(var(--border-color-rgb),.2) 23.5%,rgba(0,0,0,0) 0) 19px 30px,
+    linear-gradient(rgba(var(--border-color-rgb),.15) 14%,rgba(0,0,0,0) 0, rgba(0,0,0,0) 85%,rgba(var(--border-color-rgb),.15) 0) 0 0,
+    linear-gradient(150deg,rgba(var(--border-color-rgb),.05) 24%,rgba(0,0,0,0) 0, rgba(0,0,0,0) 74%,rgba(var(--border-color-rgb),.05) 0) 0 0,
+    linear-gradient(30deg,rgba(var(--border-color-rgb),.05) 24%,rgba(0,0,0,0) 0, rgba(0,0,0,0) 74%,rgba(var(--border-color-rgb),.05) 0) 0 0,
+    linear-gradient(-30deg,rgba(var(--border-color-rgb),.05) 24%,rgba(0,0,0,0) 0, rgba(0,0,0,0) 74%,rgba(var(--border-color-rgb),.05) 0) 0 0,
+    linear-gradient(165deg, rgba(var(--bg-surface-rgb), 0.94) 15%, rgba(var(--bg-primary-rgb), 0.97) 85%),
+    var(--bg-primary) !important;
+  background-size: 40px 60px;
+  animation: dialog-entry-anim 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  overflow: visible;
+  position: relative;
+  backdrop-filter: blur(7px);
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 22px; height: 22px;
+    border-color: var(--info-color);
+    border-style: solid;
+    opacity: 1;
+    z-index: 2;
+    filter: drop-shadow(0 0 6px var(--info-glow));
+  }
+  &::before { top: -4px; left: -4px; border-width: 2px 0 0 2px; border-top-left-radius: 5px;}
+  &::after { bottom: -4px; right: -4px; border-width: 0 2px 2px 0; border-bottom-right-radius: 5px;}
 }
 
 /* Título */
 :host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
-  color: var(--info-color) !important; /* Color cyan */
+  color: #e0fcff !important;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 500;
+  font-size: 1.7rem;
   text-align: center;
-  border-bottom: 1px solid var(--border-glow-color) !important; /* Borde cyan */
-  margin-bottom: 2rem !important;
-  padding-bottom: 1rem !important;
+  border-bottom: 1px solid var(--border-glow-color) !important;
+  margin: 0 2rem 2rem 2rem !important;
+  padding: 1.1rem 0 1.3rem 0 !important;
+  text-shadow: 0 0 15px var(--info-glow), 0 0 5px var(--info-color), 0 0 30px var(--info-glow), 0 0 45px #0ff;
+  animation: title-glow-anim 3.5s infinite ease-in-out alternate;
+  letter-spacing: 2px;
+  background: linear-gradient(to top, rgba(var(--info-color-rgb), 0.08), transparent 70%);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--info-color), transparent);
+    box-shadow: 0 0 8px var(--info-glow);
+    border-radius: 1px;
+  }
 }
 
-/* Contenido (elementos dentro del <mat-dialog-content>) */
+/* Contenido */
 mat-dialog-content {
-  padding-top: 10px;
+  padding: 0.5rem 2.2rem 0 2.2rem !important;
 }
 
-/* Campos de formulario (elementos dentro del <mat-dialog-content>) */
+/* Campos de formulario */
 .full-width {
   width: 100%;
-  margin-bottom: 1rem; /* Espacio entre campos */
+  margin-bottom: 1.8rem;
 }
 
-/* Estilos específicos para campos Material DENTRO de ESTE diálogo */
+/* --- ESTILOS CAMPOS DE FORMULARIO - Ajuste final --- */
 :host ::ng-deep .mat-mdc-form-field {
-  /* Label activo */
-  &.mat-focused .mat-mdc-floating-label {
-      color: var(--info-color) !important; /* Cyan */
+  position: relative;
+
+  &:not(.mat-mdc-form-field-type-mat-textarea) .mdc-text-field {
+    min-height: 60px !important;
+    height: 60px !important;
   }
-   /* Cursor */
-  .mat-mdc-input-element {
-     caret-color: var(--info-color) !important; /* Cyan */
+
+  .mdc-text-field {
+    background-color: rgba(var(--bg-primary-rgb), 0.8) !important;
+    border-radius: 5px !important;
+    border: 1px solid var(--border-color-light) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    overflow: visible !important;
   }
-  /* Borde activo */
-  &.mat-focused .mdc-notched-outline > * {
-    border-color: var(--info-color) !important; /* Cyan */
-    box-shadow: 0 0 5px var(--info-glow); /* Sombra cyan */
+
+   // Label
+  .mat-mdc-floating-label {
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease, text-shadow 0.3s ease !important;
+    transform-origin: left top;
+    color: var(--text-secondary);
+    padding: 0 4px;
+    left: 10px;
+    top: 27px !important; // Posición inicial para 60px height
   }
-   /* Línea activa (si aplica) */
-   &.mat-focused .mat-mdc-form-field-ripple::after {
-      background-color: var(--info-color) !important; /* Cyan */
+
+  // Label FLOTANDO
+  .mdc-floating-label--float-above {
+    top: -10px !important;
+    transform: scale(0.8) !important;
+    background-color: rgba(var(--bg-surface-rgb), 0.96) !important;
+    margin-left: -4px;
+    padding: 0 5px;
+    z-index: 1;
+    color: var(--text-secondary);
+  }
+
+  // Borde/Línea ENFOCADO
+  &.mat-focused {
+    .mdc-text-field {
+       background-color: rgba(var(--bg-surface-rgb), 0.7) !important;
+       border-color: var(--info-color) !important;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0; right: 0;
+        height: 2px;
+        background-color: var(--info-color);
+        box-shadow: 0 0 10px var(--info-glow);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        z-index: 2;
+    }
+    &.mat-focused::after {
+        transform: scaleX(1);
+    }
+
+    .mdc-notched-outline > * { border-color: transparent !important; box-shadow: none !important; }
+    .mat-mdc-form-field-ripple::after { display: none !important; }
+
+    .mat-mdc-floating-label {
+      color: var(--info-color) !important;
+      text-shadow: 0 0 8px var(--info-glow);
+      background-color: rgba(var(--bg-surface-rgb), 0.96) !important;
+    }
+  }
+
+  // Borde INACTIVO
+  .mdc-notched-outline > * {
+    border-color: var(--border-color-light) !important;
+    border-width: 1px !important;
+    transition: border-color 0.3s ease;
+  }
+   .mat-mdc-form-field-underline::before {
+      background-color: var(--border-color-light) !important;
+      transition: background-color 0.3s ease;
+      height: 1px !important;
    }
-   /* Borde inactivo */
-   .mdc-notched-outline > * {
-      border-color: var(--border-color-light) !important;
-   }
-   .mat-mdc-form-field-bottom-align::before {
-     background-color: var(--border-color-light) !important;
-   }
-    /* Placeholder y Label inactivo (Hereda de styles.scss base) */
+
+  // Hover
+  &:hover:not(.mat-focused) {
+      .mdc-text-field {
+          border-color: rgba(var(--info-color-rgb), 0.6) !important;
+      }
+      .mat-mdc-form-field-underline::before {
+          background-color: rgba(var(--info-color-rgb), 0.6) !important;
+      }
+  }
+
+  // Placeholder
+  input::placeholder, textarea::placeholder {
+     opacity: 0.4 !important;
+     font-style: italic;
+  }
+
+  // **AJUSTE PADDING PARA ALINEAR TEXTO (INPUTS NORMALES)**
+  &:not(.mat-mdc-form-field-type-mat-textarea) .mat-mdc-input-element {
+    padding: 3px 12px 10px 2px !important; // Más padding top, menos bottom
+    line-height: normal;
+  }
 }
 
+/* Ajuste específico para Textarea */
 textarea[matInput] {
-    line-height: 1.5;
-    min-height: 90px;
+    line-height: 1.55;
+    min-height: 100px !important;
+    max-height: 180px !important;
+    resize: vertical;
+    padding-top: 14px !important;
+    padding-bottom: 10px !important; // Más padding bottom
+}
+// Ajuste contenedor textarea
+:host ::ng-deep .mat-mdc-form-field .mdc-text-field--textarea {
+    height: auto !important;
+    min-height: 100px !important;
+    padding-top: 0 !important;
+    // align-items: flex-start !important; // Quitar align-items para que padding funcione
+    display: block !important; // Asegurar display block
+}
+// Posición label textarea (ajustado para padding interno del textarea)
+:host ::ng-deep .mat-mdc-form-field-type-mat-textarea .mat-mdc-floating-label {
+    top: 23px !important; // Bajar un poco la posición inicial
+}
+:host ::ng-deep .mat-mdc-form-field-type-mat-textarea .mdc-floating-label--float-above {
+    top: -10px !important;
+    background-color: rgba(var(--bg-surface-rgb), 0.96) !important;
 }
 
-/* Acciones (elementos dentro de <mat-dialog-actions>) */
+
+/* Acciones */
 mat-dialog-actions {
-  padding-top: 15px;
-  justify-content: flex-end;
-}
-/* Separador de acciones personalizado */
-:host ::ng-deep .mat-mdc-dialog-actions {
+  padding: 1.6rem 2.2rem !important;
+  margin-top: 1.2rem !important;
   border-top: 1px solid var(--border-glow-color) !important;
-  margin-top: 2rem !important;
-  padding-top: 15px !important;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(var(--bg-primary-rgb), 0.97), transparent);
 }
 
-/* Botones (elementos dentro de <mat-dialog-actions>) */
+/* Botones dentro del diálogo - Mantenidos */
+button.mat-mdc-button-base {
+  border-radius: 4px !important;
+  padding: 0 25px !important;
+  line-height: 40px !important;
+  transition: all 0.3s ease-out;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid transparent !important;
+}
+
 button[mat-button] {
-  color: var(--text-secondary);
-  border-radius: 50rem;
-  padding: 0 16px;
-  line-height: 36px;
-  &:hover {
-    color: var(--info-color);
-    background-color: rgba(13, 202, 240, 0.1);
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color-light) !important;
+  background: transparent !important;
+
+  &:hover:not(:disabled) {
+    color: var(--info-color) !important;
+    border-color: var(--info-color) !important;
+    background-color: rgba(var(--info-color-rgb), 0.1) !important;
+    box-shadow: 0 0 15px rgba(var(--info-color-rgb), 0.5), inset 0 0 5px rgba(var(--info-color-rgb), 0.2);
+    transform: translateY(-2px);
   }
 }
 
 button[mat-raised-button][color="primary"] {
-  border-radius: 50rem;
-  background-color: var(--info-color) !important; /* Botón principal cyan */
-  color: var(--bg-primary) !important; /* Texto oscuro en botón cyan */
+  background: linear-gradient(90deg, #0ff, var(--info-color), var(--primary-color-light), #0ff) !important;
+  background-size: 300% auto !important;
+  color: var(--bg-primary) !important;
+  border: none !important;
+  box-shadow: 0 0 10px #0ff, 0 0 20px var(--info-glow), 0 0 30px var(--info-glow), inset 0 0 5px rgba(255, 255, 255, 0.5) !important;
+  animation: button-primary-glow-anim 2.5s infinite ease-in-out;
+
    &:hover:not(:disabled) {
-     box-shadow: 0 5px 15px var(--info-glow) !important;
-     filter: brightness(1.1);
+     background-position: 100% 0 !important;
+     filter: brightness(1.2);
+     transform: translateY(-3px) scale(1.03);
+     animation-play-state: paused;
+     box-shadow: 0 0 15px #0ff, 0 0 30px var(--info-glow), 0 0 45px var(--info-glow), inset 0 0 8px rgba(255, 255, 255, 0.7) !important;
+   }
+    &:active:not(:disabled) {
+     transform: translateY(0px) scale(0.97);
+     filter: brightness(0.9);
+     box-shadow: 0 0 5px #0ff, 0 0 10px var(--info-glow), inset 0 0 3px rgba(255, 255, 255, 0.4) !important;
+     animation-play-state: paused;
+   }
+   &:disabled {
+     background: var(--border-color) !important;
+     color: var(--text-secondary) !important;
+     opacity: 0.5;
+     box-shadow: none !important;
+     cursor: not-allowed;
+     animation: none;
    }
 }
+

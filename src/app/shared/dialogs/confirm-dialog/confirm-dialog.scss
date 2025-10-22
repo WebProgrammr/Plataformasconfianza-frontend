@@ -3,21 +3,22 @@
 /* Estilos específicos para el contenedor del diálogo */
 :host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 15px !important;
-  border: 1px solid var(--danger-color) !important;
-  box-shadow: 0 0 20px rgba(220, 53, 69, 0.4), 0 5px 30px var(--shadow-color-strong) !important;
+  border: 1px solid var(--danger-color) !important; /* Borde rojo */
+  box-shadow: 0 0 20px rgba(220, 53, 69, 0.4), 0 5px 30px var(--shadow-color-strong) !important; /* Sombra roja */
   background: radial-gradient(circle at center, rgba(220, 53, 69, 0.1), transparent 60%),
-              var(--bg-surface) !important;
+              var(--bg-surface) !important; /* Fondo con brillo rojo sutil */
+  padding: 1.5rem !important;
 }
 
 /* Título */
 :host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
-  color: var(--danger-color) !important;
+  color: var(--danger-color) !important; /* Título rojo */
   font-weight: 500;
   font-size: 1.3rem;
   text-align: center;
-  border-bottom: 1px solid rgba(220, 53, 69, 0.3) !important;
-  margin-bottom: 1.5rem !important;
-  padding-bottom: 0.8rem !important;
+  border-bottom: 1px solid rgba(220, 53, 69, 0.3) !important; /* Borde inferior rojo tenue */
+  margin: 0 -1.5rem 1.5rem -1.5rem !important;
+  padding: 0 1.5rem 0.8rem 1.5rem !important;
 }
 
 /* Contenido */
@@ -43,6 +44,7 @@ button[mat-button] {
   padding: 0 20px;
   line-height: 36px;
   border: 1px solid var(--border-color);
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   &:hover {
     color: var(--text-primary);
     background-color: var(--bg-surface-hover);
@@ -54,5 +56,7 @@ button[mat-raised-button][color="warn"] {
   border-radius: 50rem;
   padding: 0 20px;
   line-height: 36px;
-  /* Colores base heredados */
+  background-color: var(--danger-color) !important; /* Asegurar color rojo */
+  color: var(--text-on-primary) !important; /* Asegurar texto blanco */
+  /* El hover base ya está en styles.scss */
 }

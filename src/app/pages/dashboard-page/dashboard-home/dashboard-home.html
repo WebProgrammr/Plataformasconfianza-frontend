@@ -1,9 +1,6 @@
 <div class="dashboard-home">
-  <h2>Dashboard</h2>
-
-  <div class="summary-cards">
-    <div class="summary-card compras">
-      <i class="fas fa-shopping-cart card-icon"></i>
+  <h2><i class="fas fa-chart-line me-2 icon-glow"></i> Resumen General</h2> <div class="summary-cards">
+    <div class="summary-card compras"> <i class="fas fa-shopping-cart card-icon"></i>
       <h3>Total Compras</h3>
       <p class="big-number">S/ 0.00</p>
       <small>(Simulado)</small>
@@ -12,8 +9,7 @@
        <i class="fas fa-wallet card-icon"></i>
       <h3>Saldo Actual</h3>
       <p class="big-number">S/ 0.00</p>
-       <button class="btn btn-sm btn-info" [routerLink]="['/dashboard/recarga']">
-         <i class="fas fa-plus-circle me-1"></i> Recargar
+       <button class="btn btn-sm btn-info btn-glow" [routerLink]="['/dashboard/recarga']"> <i class="fas fa-plus-circle me-1"></i> Recargar
        </button>
     </div>
     <div class="summary-card referidos" *ngIf="authService.getRole() === 'DISTRIBUIDOR'">
@@ -22,19 +18,27 @@
         <p class="big-number">0</p>
         <small>(Simulado)</small>
     </div>
+    <div class="summary-card tickets">
+        <i class="fas fa-headset card-icon"></i>
+        <h3>Tickets Soporte</h3>
+        <p class="big-number">0</p>
+        <small>(Simulado)</small>
+    </div>
   </div>
 
-  <div class="quick-actions">
-    <h3>Acciones Rápidas</h3>
-    <button class="btn btn-outline-light">
+  <div class="quick-actions card-style"> <h3><i class="fas fa-bolt me-2 icon-glow-secondary"></i> Acciones Rápidas</h3> <button class="btn btn-outline-light">
       <i class="fas fa-history me-2"></i> Ver Mis Pedidos
     </button>
     <button class="btn btn-outline-light" *ngIf="authService.getRole() === 'DISTRIBUIDOR'">
        <i class="fas fa-dollar-sign me-2"></i> Ver Mis Comisiones
     </button>
+     <button class="btn btn-outline-light">
+       <i class="fas fa-user-edit me-2"></i> Editar Perfil
+    </button>
   </div>
 
-  <div class="empty-state" *ngIf="false"> <img src="assets/images/flork-placeholder.png" alt="Sin actividad">
+   <div class="empty-state card-style" *ngIf="true"> <img src="assets/images/flork-placeholder.png" alt="Sin actividad reciente">
+      <h4>¡Todo en orden por aquí!</h4>
       <p>Realiza tu compra cuando quieras, no hay prisa.</p>
    </div>
 

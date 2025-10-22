@@ -14,39 +14,54 @@ html, body {
 }
 
 :root {
+  // Colores Base Dark
   --bg-primary: #0a0a0f;
   --bg-surface: #14141c;
   --bg-surface-hover: #1f1f29;
-  --bg-surface-light: #1a1a23;
-  --bg-glow: rgba(45, 53, 64, 0.7);
+  --bg-surface-light: #1a1a23; // Un poco más claro para sidebars/elementos elevados
+  --bg-glow: rgba(45, 53, 64, 0.7); // Sombra/glow general oscuro
 
-  --text-primary: #e0e0e0;
-  --text-secondary: #9a9aaf;
-  --text-on-primary: #ffffff;
-  --text-glow: #f0f0f0;
+  // Colores de Texto Dark
+  --text-primary: #e0e0e0; // Texto principal claro
+  --text-secondary: #9a9aaf; // Texto secundario/placeholder grisáceo
+  --text-on-primary: #ffffff; // Texto sobre fondos primarios (botones)
+  --text-glow: #f0f0f0; // Texto muy brillante
 
-  --border-color: #2a2a3a;
-  --border-color-light: #444454;
-  --border-glow-color: rgba(13, 202, 240, 0.5);
+  // Colores de Bordes Dark
+  --border-color: #2a2a3a; // Borde oscuro estándar
+  --border-color-light: #444454; // Borde un poco más claro
+  --border-glow-color: rgba(13, 202, 240, 0.5); // Glow cyan (info) para bordes activos
 
-  --primary-color: #0d6efd;
-  --primary-color-light: #3b82f6;
-  --secondary-color: #6c757d;
-  --success-color: #198754;
-  --success-glow: rgba(25, 135, 84, 0.5);
-  --warning-color: #ffc107;
-  --danger-color: #dc3545;
-  --info-color: #0dcaf0;
-  --info-glow: rgba(13, 202, 240, 0.5);
+  // Colores Acento
+  --primary-color: #0d6efd; // Azul Bootstrap
+  --primary-color-light: #3b82f6; // Azul más claro
+  --primary-glow: rgba(13, 110, 253, 0.5); // Glow azul
 
-  --primary-glow: rgba(13, 110, 253, 0.5);
+  --secondary-color: #6c757d; // Gris Bootstrap
+  --success-color: #198754; // Verde Bootstrap
+  --success-glow: rgba(25, 135, 84, 0.5); // Glow verde
+  --warning-color: #ffc107; // Amarillo Bootstrap
+  --danger-color: #dc3545; // Rojo Bootstrap
+  --info-color: #0dcaf0; // Cyan Bootstrap (usado para focus/activo)
+  --info-glow: rgba(13, 202, 240, 0.5); // Glow cyan
+
+  // Sombras
   --shadow-color-soft: rgba(0, 0, 0, 0.3);
   --shadow-color-medium: rgba(0, 0, 0, 0.4);
   --shadow-color-strong: rgba(0, 0, 0, 0.5);
 
+  // Scrollbar
   --scrollbar-track-bg: var(--bg-surface);
   --scrollbar-thumb-bg: #444;
   --scrollbar-thumb-hover-bg: #666;
+
+  // Versiones RGB para rgba()
+  --primary-color-rgb: 13, 110, 253;
+  --info-color-rgb: 13, 202, 240;
+  --danger-color-rgb: 220, 53, 69;
+  --success-color-rgb: 25, 135, 84;
+  --warning-color-rgb: 255, 193, 7;
+  --bg-surface-rgb: 20, 20, 28;
 }
 
 body {
@@ -60,31 +75,21 @@ body.mat-typography {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-track-bg);
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-bg);
-  border-radius: 10px;
-  border: 2px solid var(--scrollbar-track-bg);
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover-bg);
-}
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track-bg); }
+::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb-bg); border-radius: 10px; border: 2px solid var(--scrollbar-track-bg); }
+::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-thumb-hover-bg); }
 
+/* --- Estilos Neón/Glow --- */
 .glow-border {
   border: 1px solid var(--border-glow-color);
-  box-shadow: 0 0 8px var(--border-glow-color), inset 0 0 5px rgba(13, 202, 240, 0.2);
+  box-shadow: 0 0 8px var(--border-glow-color), inset 0 0 5px rgba(var(--info-color-rgb), 0.2);
 }
 .glow-border-hover:hover {
   border-color: var(--info-color);
-  box-shadow: 0 0 15px var(--info-glow), inset 0 0 10px rgba(13, 202, 240, 0.3);
+  box-shadow: 0 0 15px var(--info-glow), inset 0 0 10px rgba(var(--info-color-rgb), 0.3);
 }
-
 @keyframes border-gradient-flow {
   0% { border-color: var(--primary-color); }
   50% { border-color: var(--info-color); }
@@ -95,6 +100,7 @@ body.mat-typography {
   animation: border-gradient-flow 4s linear infinite;
 }
 
+/* --- Estilos Botones Bootstrap & Material --- */
 .btn-primary, .btn-primary-gradient, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-secondary,
 button[mat-raised-button], button[mat-flat-button] {
   transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, filter 0.3s ease !important;
@@ -117,8 +123,8 @@ button[mat-raised-button], button[mat-flat-button] {
 
 .btn-primary { background-color: var(--primary-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--primary-glow); } }
 .btn-success { background-color: var(--success-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--success-glow); } }
-.btn-danger { background-color: var(--danger-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4); } }
-.btn-warning { background-color: var(--warning-color); color: #000; &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4); } }
+.btn-danger { background-color: var(--danger-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(var(--danger-color-rgb), 0.4); } }
+.btn-warning { background-color: var(--warning-color); color: #000; &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(var(--warning-color-rgb), 0.4); } }
 .btn-info { background-color: var(--info-color); color: #000; &:hover:not(:disabled) { box-shadow: 0 5px 15px var(--info-glow); } }
 .btn-secondary { background-color: var(--secondary-color); color: var(--text-on-primary); &:hover:not(:disabled) { box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4); } }
 
@@ -145,7 +151,7 @@ button[mat-raised-button], button[mat-flat-button] {
       border-radius: 50rem;
       transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
       &:hover {
-        background-color: rgba(13, 110, 253, 0.1);
+        background-color: rgba(var(--primary-color-rgb), 0.1);
         color: var(--primary-color-light);
         border-color: var(--primary-color-light);
         box-shadow: 0 0 10px var(--primary-glow);
@@ -157,6 +163,7 @@ button[mat-raised-button], button[mat-flat-button] {
       }
 }
 
+/* --- Estilos Formularios Bootstrap --- */
 .form-control, .form-select {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
@@ -172,7 +179,7 @@ button[mat-raised-button], button[mat-flat-button] {
   }
   &::placeholder {
      color: var(--text-secondary) !important;
-     opacity: 0.5 !important;
+     opacity: 0.7 !important; // Placeholder un poco más visible
   }
 }
 input:-webkit-autofill,
@@ -181,12 +188,12 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--bg-surface) inset !important;
     -webkit-text-fill-color: var(--text-primary) !important;
-    caret-color: var(--text-primary) !important;
+    caret-color: var(--info-color) !important; // Cursor cyan en autofill
 }
 .input-group-text {
   background-color: var(--bg-surface-hover);
   border: 1px solid var(--border-color);
-  color: var(--info-color);
+  color: var(--info-color); // Icono cyan
   border-radius: 8px 0 0 8px;
 }
 select option {
@@ -194,6 +201,7 @@ select option {
   color: var(--text-primary);
 }
 
+/* --- Estilos Tablas Bootstrap --- */
 .table-responsive, .table-container {
     border-radius: 12px;
     overflow: hidden;
@@ -208,11 +216,11 @@ select option {
   --bs-table-bg: transparent;
   --bs-table-border-color: var(--border-color);
   --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
-  --bs-table-hover-bg: rgba(13, 202, 240, 0.05);
+  --bs-table-hover-bg: rgba(var(--info-color-rgb), 0.05); // Hover cyan tenue
 }
 .table thead th {
   color: var(--text-secondary);
-  background-color: rgba(44, 62, 80, 0.5);
+  background-color: rgba(44, 62, 80, 0.5); // Fondo cabecera (puede ajustarse)
   border-bottom: 2px solid var(--border-color-light);
   font-weight: 600;
   text-transform: uppercase;
@@ -232,104 +240,156 @@ select option {
 }
 
 /* --- Base Dark Theme para Diálogos de Material --- */
-/* Solo fondo, color base y radio base */
+/* Fondo general del overlay */
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6) !important; // Overlay más oscuro
+}
+/* Contenedor del diálogo */
 .mat-mdc-dialog-container .mdc-dialog__surface {
-  background-color: var(--bg-surface) !important;
-  color: var(--text-primary) !important;
-  border-radius: 8px !important;
+  background-color: var(--bg-surface) !important; // Fondo Surface
+  color: var(--text-primary) !important; // Texto Primario
+  border-radius: 12px !important; // Más redondeado
+  box-shadow: 0 10px 30px var(--shadow-color-strong) !important; // Sombra fuerte
+  border: 1px solid var(--border-color-light) !important; // Borde sutil
 }
-/* Color base del título */
+/* Título del diálogo */
 .mat-mdc-dialog-container .mdc-dialog__title {
-  color: var(--text-primary) !important;
+  color: var(--text-glow) !important; // Título brillante
+  font-weight: 500; // Semi-bold
+  border-bottom: 1px solid var(--border-color) !important; // Separador
+  padding-bottom: 0.8rem !important;
+  margin-bottom: 1.5rem !important; // Más espacio debajo
 }
-/* Color base del contenido */
+/* Contenido del diálogo */
 .mat-mdc-dialog-content {
-   color: var(--text-secondary);
+   color: var(--text-secondary) !important; // Texto secundario
+}
+/* Acciones del diálogo */
+.mat-mdc-dialog-actions {
+  padding: 8px 24px 16px 24px !important; // Ajustar padding si es necesario
+  border-top: 1px solid var(--border-color) !important; // Separador
+  margin-top: 1.5rem !important; // Espacio arriba
 }
 
-/* --- Base Dark Theme para Campos de Formulario Material (FUNCIONAL) --- */
+
+/* --- Base Dark Theme para Campos de Formulario Material (CORREGIDO) --- */
 .mat-mdc-form-field {
-  /* Color del Label/Placeholder (cuando no está flotando o no enfocado) */
-  .mat-mdc-form-field-label,
-  .mat-mdc-floating-label:not(.mdc-floating-label--float-above),
-  input::placeholder,
-  textarea::placeholder,
-  .mat-mdc-select-placeholder {
+
+  // --- Colores de Texto ---
+  .mat-mdc-input-element,             // Texto del input/textarea
+  .mat-mdc-select-value-text {      // Texto del select
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important; // Para autofill
+  }
+  .mat-mdc-input-element {
+     caret-color: var(--info-color) !important; // Cursor Cyan
+  }
+
+  // --- Colores de Labels y Placeholders ---
+  .mat-mdc-floating-label,           // Label flotante
+  .mat-mdc-form-field-label,         // Label no flotante
+  input::placeholder,               // Placeholder input
+  textarea::placeholder,            // Placeholder textarea
+  .mat-mdc-select-placeholder {      // Placeholder select
     color: var(--text-secondary) !important;
     opacity: 0.7 !important;
   }
 
-  /* Color del Label flotante enfocado */
-  &.mat-focused .mat-mdc-floating-label {
-    color: var(--primary-color-light) !important; /* Azul claro por defecto */
+  // Label cuando está FLOTANDO (arriba) Y/O el campo está ENFOCADO
+  &.mat-focused .mat-mdc-floating-label, // Campo enfocado, label flota
+  &.mat-mdc-form-field-has-value .mat-mdc-floating-label { // Campo tiene valor, label flota
+    color: var(--info-color) !important; // Color Cyan
     opacity: 1 !important;
   }
 
-  /* Color del texto del input */
-  .mat-mdc-input-element,
-  .mat-mdc-select-value {
-    color: var(--text-primary) !important;
-    caret-color: var(--primary-color-light); /* Cursor */
+  // Asterisco de requerido (debe ser visible)
+  .mat-mdc-form-field-required-marker {
+     color: var(--danger-color) !important; // Color Rojo
   }
 
-  /* Color del borde/línea inactivo */
-  .mdc-notched-outline > *,
-  .mat-mdc-form-field-underline::before, /* Para Standard/Fill */
-  .mat-mdc-form-field-bottom-align::before { /* Para Standard/Fill */
-    border-color: var(--border-color) !important;
-    background-color: var(--border-color) !important; /* Solo para línea */
+
+  // --- Colores de Bordes y Líneas ---
+  // Borde/Línea INACTIVO
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing,  // Partes del borde Outline
+  .mat-mdc-form-field-underline::before { // Línea para Standard/Fill
+    border-color: var(--border-color-light) !important;
   }
 
-  /* Color del borde/línea enfocado */
-  &.mat-focused .mdc-notched-outline > * {
-    border-color: var(--primary-color-light) !important;
-    border-width: 2px !important;
-  }
-  &.mat-focused .mat-mdc-form-field-ripple::after { /* Para Standard/Fill */
-    background-color: var(--primary-color-light) !important;
+  // Borde/Línea ENFOCADO
+  &.mat-focused {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--info-color) !important; // Borde Cyan
+      border-width: 2px !important; // Más grueso
+    }
+    .mat-mdc-form-field-ripple::after { // Línea para Standard/Fill
+      background-color: var(--info-color) !important; // Línea Cyan
+    }
   }
 
-  /* Flecha del Select */
+  // --- Otros ---
+  // Flecha del Select
   .mat-mdc-select-arrow svg {
-    color: var(--text-secondary) !important;
+    fill: var(--text-secondary) !important;
   }
 
-  /* Color del mensaje de error */
+  // Mensaje de error
   .mat-mdc-form-field-error {
      color: var(--danger-color) !important;
      opacity: 0.9;
+     font-size: 0.75rem;
   }
 }
 
-/* --- Botones Material (Estilos base oscuros) --- */
+
+/* --- Estilos Botones Material Base (Dark) --- */
+button[mat-raised-button], button[mat-flat-button] {
+  border-radius: 50rem !important; // Asegurar píldora
+  padding: 0 1.2em !important; // Padding horizontal
+  line-height: 36px !important; // Altura estándar
+}
+
 .mat-mdc-raised-button.mat-primary {
-  --mdc-protected-button-container-color: var(--primary-color);
-  --mdc-protected-button-label-text-color: var(--text-on-primary);
-  &:hover:not(:disabled) { background-color: var(--primary-color-light); box-shadow: 0 5px 15px var(--primary-glow); filter: brightness(1.1); }
+  --mdc-protected-button-container-color: var(--primary-color) !important;
+  --mdc-protected-button-label-text-color: var(--text-on-primary) !important;
+  &:hover:not(:disabled) {
+     --mdc-protected-button-container-color: var(--primary-color-light) !important;
+     box-shadow: 0 5px 15px var(--primary-glow) !important;
+     filter: brightness(1.1);
+  }
 }
 .mat-mdc-raised-button.mat-warn {
-  --mdc-protected-button-container-color: var(--danger-color);
-  --mdc-protected-button-label-text-color: var(--text-on-primary);
-   &:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4); }
-}
-.mat-mdc-button.mat-unthemed, button[mat-button] {
-   color: var(--text-secondary);
-   border-radius: 50rem;
+  --mdc-protected-button-container-color: var(--danger-color) !important;
+  --mdc-protected-button-label-text-color: var(--text-on-primary) !important;
    &:hover:not(:disabled) {
-      background-color: var(--bg-surface-hover);
-      color: var(--text-primary);
+     filter: brightness(1.1);
+     box-shadow: 0 5px 15px rgba(var(--danger-color-rgb), 0.4) !important;
    }
 }
+// Botones de Texto (mat-button)
+.mat-mdc-button.mat-unthemed, button[mat-button] {
+   color: var(--text-secondary) !important;
+   border-radius: 50rem !important;
+   &:hover:not(:disabled) {
+      background-color: var(--bg-surface-hover) !important;
+      color: var(--text-primary) !important;
+   }
+}
+// Botones de Icono (mat-icon-button)
 button[mat-icon-button] {
-   color: var(--text-secondary);
+   color: var(--text-secondary) !important;
    border-radius: 50%;
     &:hover:not(:disabled) {
-      background-color: var(--bg-surface-hover);
-      color: var(--text-primary);
+      background-color: var(--bg-surface-hover) !important;
+      color: var(--text-primary) !important;
    }
 }
+// Iconos dentro de botones
 button[mat-button] mat-icon, button[mat-raised-button] mat-icon, button[mat-icon-button] mat-icon {
-   color: inherit;
+   color: inherit !important; // Hereda el color del botón
 }
 
 /* --- Animaciones --- */
@@ -340,7 +400,6 @@ button[mat-button] mat-icon, button[mat-raised-button] mat-icon, button[mat-icon
 .section-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
 }
-
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -349,9 +408,9 @@ button[mat-button] mat-icon, button[mat-raised-button] mat-icon, button[mat-icon
 .icon-pulse {
   animation: pulse 1.5s infinite ease-in-out;
 }
-
 @keyframes gradient-flow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+

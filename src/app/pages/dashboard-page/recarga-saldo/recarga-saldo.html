@@ -1,26 +1,83 @@
 <div class="recarga-saldo-page">
-  <h2><i class="fas fa-bolt"></i> Recargar Saldo</h2>
+  <h2 class="page-title"><i class="fas fa-charging-station icon-glow-warning"></i> Recargar Saldo</h2>
 
-  <div class="alert alert-info">
-    Puedes recargar desde <strong>S/ 5.00</strong>. Las recargas se procesan manualmente.
-  </div>
+  <div class="recarga-layout">
 
-  <div class="metodos-pago">
-    <h4>Escoge tu método de Pago</h4>
-
-    <div class="metodo">
-      <h5>Yape</h5>
-      <p>Escanea el código QR o usa el número:</p>
-      <img src="assets/images/qr-yape-simulado.png" alt="Código QR Yape Simulado" class="qr-code">
-      <p class="numero-yape"><strong>Número:</strong> 987 654 321 (Inocencio Hernandez)</p>
+    <div class="columna-izquierda">
+      <div class="payment-methods card-style anim-fade-in delay-2">
+        <h4 class="section-title"><i class="fas fa-qrcode me-2"></i> Métodos de Pago Disponibles</h4>
+        <div class="metodo yape neon-border-warning">
+          <div class="metodo-header">
+            <img src="assets/images/yape-logo.png" alt="Yape Logo" class="metodo-logo">
+            <h5>Yape</h5>
+          </div>
+          <p class="metodo-instruction">Escanea el código QR o usa el número:</p>
+          <div class="qr-container">
+             <img src="assets/images/qr-yape-simulado.png" alt="Código QR Yape Simulado" class="qr-code">
+             <div class="qr-scan-line"></div>
+             <div class="qr-corner top-left"></div>
+             <div class="qr-corner top-right"></div>
+             <div class="qr-corner bottom-left"></div>
+             <div class="qr-corner bottom-right"></div>
+          </div>
+          <p class="numero-yape">
+            <i class="fas fa-mobile-alt me-2"></i>
+            <strong>Número:</strong>
+            <span class="numero-valor anim-text-glow">987 654 321</span>
+            (Inocencio H.)
+          </p>
+        </div>
+        <div class="metodo disabled">
+          <h5><i class="fas fa-university me-2"></i> Transferencia BCP (Próximamente)</h5>
+        </div>
+         <div class="metodo disabled">
+          <h5><i class="fab fa-paypal me-2"></i> PayPal (Próximamente)</h5>
+        </div>
+      </div>
+      <div class="instrucciones-finales card-style neon-border-success anim-fade-in delay-3">
+        <h4 class="section-title success"><i class="fas fa-check-double me-2"></i> ¡Paso Final e Importante!</h4>
+        <p>Una vez realizado el pago, <strong>envía tu comprobante</strong> (captura o foto) a nuestro WhatsApp para verificar tu recarga y añadir el saldo a tu cuenta.</p>
+        <a href="https://wa.me/TUNUMERO" target="_blank" class="btn btn-success btn-glow btn-pulse">
+           <i class="fab fa-whatsapp me-2"></i> Enviar Comprobante Ahora
+        </a>
+      </div>
     </div>
 
-  </div>
+    <div class="columna-derecha">
+      <div class="info-card card-style neon-border-info anim-fade-in delay-1">
+        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+        <p>Puedes recargar desde <strong>S/ 5.00</strong>. Las recargas se verifican y procesan manualmente por nuestro equipo.</p>
+        <p class="small text-secondary">Tiempo estimado: 5-15 minutos en horario de atención.</p>
+      </div>
 
-  <div class="instrucciones">
-    <h4>¡Importante!</h4>
-    <p>Una vez realizado el pago, envía tu comprobante por WhatsApp para verificar y añadir el saldo a tu cuenta.</p>
-    <a href="#" class="btn btn-success"> <i class="fab fa-whatsapp me-2"></i> Enviar Comprobante
-    </a>
+      <div class="anuncio-card card-style anim-fade-in delay-4 interactive-tilt-card"
+           (mousemove)="onMouseMove($event)"
+           (mouseleave)="onMouseLeave()">
+        <div class="anuncio-glow"></div>
+        <div class="anuncio-content">
+          <i class="fas fa-rocket anuncio-icon"></i>
+          <h4>¡Nuevos Servicios!</h4>
+          <p>Explora nuestro catálogo actualizado con más plataformas y software.</p>
+          <a routerLink="/servicios" class="btn btn-sm btn-outline-light">Ver Catálogo</a>
+        </div>
+      </div>
+
+       <div class="faq-section card-style anim-fade-in delay-5">
+          <h4 class="section-title secondary"><i class="fas fa-question-circle me-2"></i> Preguntas Frecuentes</h4>
+          <details>
+             <summary>¿Cuánto demora la recarga?</summary>
+             <p>Normalmente entre 5 a 15 minutos después de enviar tu comprobante en nuestro horario de atención.</p>
+          </details>
+           <details>
+             <summary>¿Qué pasa si me equivoco de monto?</summary>
+             <p>Contacta a soporte por WhatsApp inmediatamente para revisar tu caso.</p>
+          </details>
+           <details>
+             <summary>¿Hay otros métodos de pago?</summary>
+             <p>Estamos trabajando para añadir más métodos pronto.</p>
+          </details>
+       </div>
+    </div>
+
   </div>
 </div>

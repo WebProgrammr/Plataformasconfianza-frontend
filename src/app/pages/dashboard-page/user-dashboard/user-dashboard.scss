@@ -1,22 +1,227 @@
-// src/app/pages/dashboard-page/user-dashboard/user-dashboard.scss
-/* Puedes añadir estilos específicos para el dashboard aquí si necesitas diferenciarlo del admin */
-.dashboard-layout {
-  // Ejemplo: quizás un fondo diferente
-  // background-color: #1a1a1a;
+/* src/app/pages/dashboard-page/dashboard-home/dashboard-home.scss */
+
+// Keyframes específicos si son necesarios
+@keyframes card-icon-float {
+  0%, 100% { transform: translateY(0) rotate(-15deg); }
+  50% { transform: translateY(-5px) rotate(-10deg); }
 }
 
-.dashboard-sidebar {
-  // Estilos específicos del sidebar del dashboard
+.dashboard-home {
+  padding: 1rem 0;
 }
 
-.dashboard-content {
-  // Ajustes para el contenido principal del dashboard
-  // Por ejemplo, quitar el padding-top si el navbar ya no interfiere
-  padding-top: 2rem; // O ajustarlo según el diseño final
-}
-
-// Asegurar que los íconos tengan espacio
-.admin-menu a i {
-  width: 20px; // Ancho fijo para alineación
+.dashboard-home h2 {
+  margin-bottom: 2.5rem;
+  color: var(--text-glow);
+  font-weight: 500;
   text-align: center;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon-glow {
+    color: var(--primary-color-light);
+    text-shadow: 0 0 10px var(--primary-glow);
+    margin-right: 0.8rem;
+  }
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+// Estilo base de tarjeta reutilizable
+.card-style {
+  background: linear-gradient(145deg, var(--bg-surface), var(--bg-surface-light));
+  border-radius: 15px;
+  padding: 1.8rem 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 25px var(--shadow-color-medium), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+  // Brillo sutil de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -60%;
+    width: 220%; height: 220%;
+    background: radial-gradient(circle, rgba(var(--info-color-rgb), 0.12) 0%, rgba(var(--info-color-rgb), 0) 65%);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: var(--border-glow-color);
+    box-shadow: 0 12px 35px var(--shadow-color-strong), 0 0 20px var(--info-glow), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+
+    &::before {
+      opacity: 0.7;
+    }
+    // Animación icono al hacer hover en tarjeta
+    .card-icon {
+       opacity: 0.15; // Hacerlo un poco más visible
+       transform: translateY(-5px) rotate(-10deg) scale(1.1); // Efecto sutil
+    }
+  }
+}
+
+
+.summary-card {
+  @extend .card-style; // Hereda estilos base
+
+  h3 {
+    margin-top: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative; z-index: 2;
+  }
+
+  .big-number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-glow);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.1;
+    position: relative; z-index: 2;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2), 0 0 10px var(--primary-glow);
+  }
+
+  small {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    position: relative; z-index: 2;
+  }
+
+  .btn {
+    margin-top: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    position: relative; z-index: 2;
+    // Botón con glow (usando btn-glow como clase helper)
+    &.btn-glow {
+       box-shadow: 0 0 10px var(--info-glow);
+       transition: box-shadow 0.3s ease, transform 0.2s ease-out, filter 0.3s ease !important; // Sobrescribir transición base si es necesario
+       &:hover {
+          box-shadow: 0 0 15px var(--info-glow), 0 0 25px var(--info-glow);
+       }
+    }
+  }
+
+  .card-icon {
+      position: absolute;
+      bottom: 0.8rem;
+      right: 1rem;
+      font-size: 3.5rem; // Más grande
+      color: var(--primary-color);
+      opacity: 0.06; // Más tenue
+      z-index: 1;
+      transform: rotate(-15deg);
+      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); // Transición con rebote
+      // animation: card-icon-float 4s infinite ease-in-out; // Animación flotante opcional
+  }
+
+  // Colores específicos
+  &.saldo {
+    .big-number { color: var(--success-color); text-shadow: 0 0 10px var(--success-glow); }
+    .card-icon { color: var(--success-color); }
+    .btn-info.btn-glow { // Ajustar glow del botón recargar si es necesario
+        --button-glow-color: var(--info-glow); // Variable local para glow
+        background-color: var(--info-color);
+        color: #000;
+         box-shadow: 0 0 10px var(--button-glow-color);
+         &:hover {
+            box-shadow: 0 0 15px var(--button-glow-color), 0 0 25px var(--button-glow-color);
+         }
+    }
+  }
+  &.referidos {
+    .big-number { color: var(--warning-color); text-shadow: 0 0 10px rgba(var(--warning-color-rgb), 0.5); }
+    .card-icon { color: var(--warning-color); }
+  }
+   &.tickets {
+      .big-number { color: var(--secondary-color); text-shadow: 0 0 8px rgba(108, 117, 125, 0.5); }
+      .card-icon { color: var(--secondary-color); }
+   }
+}
+
+.quick-actions {
+  @extend .card-style; // Reutiliza estilo de tarjeta
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative; z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon-glow-secondary {
+       color: var(--secondary-color);
+       text-shadow: 0 0 8px rgba(108, 117, 125, 0.5); // Glow grisáceo
+       margin-right: 0.6rem;
+    }
+  }
+  .btn {
+    margin: 0.5rem;
+    position: relative; z-index: 2;
+  }
+}
+
+// Estilos para el placeholder Flork
+.empty-state {
+   @extend .card-style; // Reutiliza estilo tarjeta
+   text-align: center;
+   padding: 3rem 1.5rem;
+   border-style: dashed; // Borde punteado
+   border-color: var(--border-color-light);
+   background: var(--bg-surface); // Fondo más plano
+
+   &:hover { // Hover más sutil para el placeholder
+      transform: none;
+      border-color: var(--text-secondary);
+      box-shadow: 0 8px 25px var(--shadow-color-medium), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+       &::before { opacity: 0.1; } // Brillo muy tenue
+   }
+
+   img {
+      max-width: 130px; // Más pequeño
+      margin-bottom: 1.5rem;
+      opacity: 0.5; // Más tenue
+      filter: grayscale(50%); // Un poco gris
+   }
+
+   h4 {
+      color: var(--text-secondary); // Menos énfasis
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+   }
+
+   p {
+      color: var(--text-secondary);
+      opacity: 0.8;
+      font-size: 0.9rem;
+   }
 }

@@ -9,23 +9,31 @@
   max-width: 1400px;
   margin: 1rem auto 0 auto;
   border-radius: 50rem;
-  
-  // --- CAMBIO A DARK GLASS ---
-  background: rgba(30, 30, 30, 0.75); // Fondo de cristal oscuro
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  
+
+  // --- DARK GLASS MEJORADO ---
+  // Asegúrate de tener --bg-surface-rgb definido o usa rgba directo
+  background: rgba(20, 20, 28, 0.7); // Usando rgba directo (20, 20, 28 es --bg-surface)
+  backdrop-filter: blur(18px); // Más blur
+  -webkit-backdrop-filter: blur(18px);
+
   border: 1px solid rgba(255, 255, 255, 0.1); // Borde claro
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  
+  // Sombra con Glow sutil
+  // Asegúrate de tener --primary-color-rgb definido o usa rgba directo
+  box-shadow: 0 8px 32px var(--shadow-color-medium), 0 0 15px rgba(13, 110, 253, 0.1); // Usando rgba directo
+
   padding: 0.5rem 1.5rem;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out, box-shadow 0.4s ease; // Transición para sombra
+
+  &:hover {
+     // Intensificamos el glow al pasar el mouse
+     box-shadow: 0 8px 32px var(--shadow-color-strong), 0 0 25px var(--primary-glow);
+  }
 }
 
-// --- TEXTO CLARO PARA MODO OSCURO ---
 .navbar-brand {
   font-weight: bold;
-  color: var(--text-primary) !important;
+  color: var(--text-glow) !important; // Texto más brillante
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); // Sombra de texto
 }
 
 .nav-link {
@@ -34,32 +42,74 @@
   padding: 0.5rem 1rem !important;
   border-radius: 50rem;
   transition: all 0.2s ease-in-out;
+  position: relative; // Para pseudo-elementos
+  overflow: hidden; // Para contener efectos
+
+   // Efecto hover sutil
+   &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color-light);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 5px var(--primary-glow);
+   }
 
   &:hover {
     color: var(--text-primary) !important;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--dashboard-hover-link-bg); // Reutilizamos variable
+    &::before {
+       width: 60%; // Muestra línea inferior
+    }
   }
 
   &.active {
-    color: var(--primary-color) !important;
-    background-color: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color-light) !important; // Texto activo más claro
+    // Asegúrate de tener --primary-color-rgb definido o usa rgba directo
+    background-color: rgba(13, 110, 253, 0.1); // Usando rgba directo
+    font-weight: 600; // Un poco más bold
+    text-shadow: 0 0 8px var(--primary-glow); // Glow en texto activo
+
+     &::before {
+       width: 80%; // Línea más ancha y visible
+       background-color: var(--primary-color);
+       box-shadow: 0 0 8px var(--primary-glow);
+    }
   }
 }
 
-// Botón Toggler (para el icono fas fa-bars)
 .navbar-toggler {
   border: none;
   font-size: 1.5rem;
   color: var(--text-primary);
+  transition: color 0.2s ease;
   &:focus {
     box-shadow: none;
   }
+   &:hover {
+     color: var(--primary-color-light); // Cambia color al pasar el mouse
+  }
 }
 
-// Botones
+// Botones Registro/Logout (usamos clases de styles.scss pero podemos añadir specifics)
 .btn-primary.rounded-pill {
   padding: 0.5rem 1.25rem;
   font-weight: 500;
+  // Podríamos añadir un glow específico si no está en styles.scss
+  box-shadow: 0 0 10px var(--primary-glow);
+  &:hover {
+    box-shadow: 0 0 15px var(--primary-glow), 0 0 25px var(--primary-glow);
+  }
+}
+.btn-outline-light.rounded-pill {
+   // Estilos de hover ya definidos en styles.scss, podrían ajustarse
+   &:hover {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.1);
+   }
 }
 
 // --- RESPONSIVE ---
@@ -67,13 +117,33 @@
   .floating-pill {
     width: 100%;
     margin-top: 0;
-    border-radius: 0; 
-    background: rgba(30, 30, 30, 0.95); // Más opaco
+    border-radius: 0;
+    // Asegúrate de tener --bg-surface-rgb definido o usa rgba directo
+    background: rgba(20, 20, 28, 0.9); // Más opaco en móvil
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px var(--shadow-color-medium); // Sombra más simple
+    border: none; // Sin borde en móvil
+     border-bottom: 1px solid var(--border-color); // Borde inferior
   }
 
   .navbar-nav .nav-item {
     padding: 0.25rem 0;
   }
+
+  // Ajustes para centrar elementos en el menú desplegado
+  .navbar-collapse {
+     padding: 1rem;
+     text-align: center;
+  }
+   .navbar-nav .nav-link {
+     margin-bottom: 0.5rem;
+      &::before { display: none; } // Ocultar línea inferior en móvil
+   }
+   .navbar-nav.ms-auto { // Para los botones login/registro/logout
+       margin-top: 1rem;
+       border-top: 1px solid var(--border-color-light);
+       padding-top: 1rem;
+       .nav-item { margin: 0.5rem 0; }
+   }
 }
