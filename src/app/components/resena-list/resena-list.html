@@ -1,0 +1,21 @@
+<section class="resena-section">
+  <h2>Lo que dicen nuestros clientes</h2>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div class="resena-grid">
+    <div *ngFor="let resena of resenas" class="resena-card">
+      <div class="stars">
+        <span *ngFor="let _ of getStars(resena.calificacion)">★</span>
+      </div>
+      <p class="comentario">"{{ resena.comentario }}"</p>
+      <small class="autor">Usuario (ID: {{ resena.idUsuario }})</small>
+    </div>
+  </div>
+
+  <div *ngIf="!errorMessage && resenas.length === 0">
+    <p>Aún no hay reseñas. ¡Sé el primero!</p>
+  </div>
+</section>

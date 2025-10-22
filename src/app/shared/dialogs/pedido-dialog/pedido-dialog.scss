@@ -1,0 +1,14 @@
+/* src/app/shared/dialogs/pedido-dialog/pedido-dialog.scss */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+mat-dialog-content {
+  min-width: 300px;
+  max-width: 500px;
+}
+
+mat-dialog-content p {
+  margin-bottom: 1.5rem; /* Espacio antes del formulario */
+}

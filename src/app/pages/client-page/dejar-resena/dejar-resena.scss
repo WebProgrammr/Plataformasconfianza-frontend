@@ -1,0 +1,24 @@
+// Reutilizamos todos los estilos de la página de Login/Register
+@import '../../../authentication/login/login.scss';
+
+// Hacemos que el <select> y <textarea> también sean oscuros
+.form-select,
+textarea.form-control {
+  background-color: var(--bg-surface);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+
+  &:focus {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem var(--primary-glow);
+  }
+
+  // Corregir el color del <option> en modo oscuro
+  option {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+  }
+}

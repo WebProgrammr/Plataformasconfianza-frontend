@@ -1,0 +1,264 @@
+/* --- Definición de Animaciones --- */
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(50px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-shadow {
+  0% { box-shadow: 0 0 25px var(--primary-glow), 0 0 0 rgba(0,0,0,0); }
+  50% { box-shadow: 0 0 40px var(--primary-glow), 0 0 30px var(--primary-glow); }
+  100% { box-shadow: 0 0 25px var(--primary-glow), 0 0 0 rgba(0,0,0,0); }
+}
+
+/* --- Contenedor Principal (Página completa) --- */
+.auth-page-wrapper {
+  position: relative;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  overflow: hidden;
+  perspective: 1500px;
+}
+
+/* --- Auras de Fondo (Más vibrantes) --- */
+.aura {
+  position: absolute;
+  filter: blur(150px);
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0.25;
+}
+.aura-1 {
+  width: 500px; height: 500px;
+  background: #0d6efd;
+  left: -200px; top: 5%;
+}
+.aura-2 {
+  width: 400px; height: 400px;
+  background: #dc3545;
+  right: -150px; bottom: 5%;
+}
+.aura-3 {
+  width: 300px; height: 300px;
+  background: #ffc107;
+  left: 30%; bottom: 0%;
+  opacity: 0.15;
+}
+
+/* --- Tarjeta Principal (2 Columnas) --- */
+.auth-card-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: rgba(30, 30, 30, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  animation: floatIn 0.8s ease-out forwards;
+}
+
+/* --- Columna Izquierda (Formulario) --- */
+.auth-form-column {
+  padding: 3rem;
+
+  h2.auth-title {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+  }
+  p.auth-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+}
+
+/* --- Columna Derecha (Gráfico) --- */
+.auth-graphic-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 2rem;
+
+  .graphic-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    text-align: center;
+  }
+}
+
+/* Ocultar gráfico en móviles */
+@media (max-width: 800px) {
+  .auth-card-wrapper {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+  }
+  .auth-graphic-column {
+    display: none;
+  }
+}
+
+
+/* --- Animación de Campos (Staggered) --- */
+.animated-field {
+  opacity: 0;
+  animation: slideIn 0.5s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; } // Este delay ya no se usa en el botón del login
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; } // Para register
+
+/* --- Campos de Formulario (Inputs) --- */
+.input-group {
+  margin-bottom: 0.5rem;
+
+  .input-group-text {
+    background-color: #333;
+    border: 1px solid var(--border-color);
+    color: var(--primary-color);
+    min-width: 45px;
+    justify-content: center;
+  }
+
+  .form-control {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    &::placeholder { color: var(--text-secondary); }
+    &:focus {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem var(--primary-glow);
+    }
+  }
+}
+
+/* --- Botón Principal (Destacado) --- */
+.btn-primary-gradient {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  border: none;
+  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+  background-size: 200% auto;
+  transition: all 0.4s ease;
+  margin-top: 1.5rem;
+
+  box-shadow: 0 0 25px var(--primary-glow);
+  animation: pulse-shadow 3s infinite;
+
+  &:hover:not(:disabled) {
+    background-position: right center;
+    transform: scale(1.02);
+  }
+  &:disabled {
+    background: var(--text-secondary);
+    opacity: 0.7;
+    animation: none;
+    box-shadow: none;
+  }
+}
+
+/* --- Links Adicionales --- */
+.auth-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  .forgot-password-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    &:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+  }
+}
+
+/* --- Link de Soporte --- */
+.support-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    &:hover {
+      color: var(--primary-color);
+    }
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+/* --- Errores y Mensajes --- */
+.field-error {
+  margin-bottom: 1rem;
+  small { color: #f8d7da; font-size: 0.8rem; display: block; padding-left: 0.25rem; }
+}
+.message {
+  padding: 1rem; border-radius: 5px; text-align: center;
+  font-size: 0.9rem; font-weight: 500;
+}
+.animated-message {
+  opacity: 0;
+  animation: floatIn 0.5s ease-out forwards;
+}
+.message.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #f8d7da; border: 1px solid #dc3545;
+}
+.message.success {
+  background-color: rgba(25, 135, 84, 0.1);
+  color: #d1e7dd; border: 1px solid #198754;
+}
+
+/* --- Enlace Inferior (Register/Login) --- */
+.auth-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    &:hover { text-decoration: underline; }
+  }
+}

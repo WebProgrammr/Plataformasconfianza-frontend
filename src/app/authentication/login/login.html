@@ -1,1 +1,60 @@
-<p>login works!</p>
+<div class="auth-page-wrapper" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+  <div class="aura aura-3"></div>
+
+  <div class="auth-card-wrapper">
+    <div class="auth-form-column">
+      <h2 class="auth-title">Iniciar Sesión</h2>
+      <p class="auth-subtitle">Accede a tus servicios digitales.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="errorMessage" class="message error mb-3 animated-message">
+          {{ errorMessage }}
+        </div>
+
+        <div class="input-group animated-field delay-1">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input type="email" class="form-control" placeholder="Email" formControlName="email">
+        </div>
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="field-error">
+          <small>El email es obligatorio.</small>
+        </div>
+
+        <div class="input-group animated-field delay-2">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="field-error">
+          <small>La contraseña es obligatoria.</small>
+        </div>
+
+        <div class="auth-options animated-field delay-3">
+          <a href="#" class="forgot-password-link">¿Olvidé mi contraseña?</a>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="btn-primary-gradient w-100 rounded-pill">
+          <i class="fas fa-sign-in-alt me-2"></i>
+          Entrar
+        </button>
+
+        <div class="auth-link animated-field delay-5">
+          ¿No tienes cuenta? <a [routerLink]="['/register']">Regístrate aquí</a>
+        </div>
+
+        <div class="support-link animated-field delay-6">
+          <a href="#"><i class="fas fa-headset"></i> Soporte</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="auth-graphic-column">
+      <div class="graphic-placeholder">
+        (futuro logo)
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,186 @@
+// Hero con fondo de gradiente animado
+.hero-section {
+  height: 70vh;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+
+  // Fondo de gradiente
+  background: linear-gradient(-45deg, var(--primary-color), var(--bg-primary), #2c3e50, #121212);
+  background-size: 400% 400%;
+  animation: gradient-flow 15s ease infinite;
+
+  .hero-content {
+    h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+  }
+}
+
+// NUEVA SECCIÓN MARQUEE
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-section {
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+
+  .marquee-content {
+    display: inline-block;
+    animation: marquee-scroll 40s linear infinite;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin: 0 2rem;
+      i {
+        color: var(--primary-color);
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+
+// SECCIÓN CTA ACTUALIZADA (CON AURAS)
+.cta-section {
+  padding: 5rem 2rem;
+  background-color: var(--bg-surface);
+  position: relative; // Para las auras
+  overflow: hidden; // Para las auras
+
+  // "Cositas a los costados" (Auras de gradiente)
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    opacity: 0.1; // Sutil
+    filter: blur(120px); // Muy borroso
+    border-radius: 50%;
+  }
+  &::before {
+    background: var(--primary-color);
+    width: 300px;
+    height: 300px;
+    left: -150px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &::after {
+    background: #ffc107; // Color de acento
+    width: 200px;
+    height: 200px;
+    right: -100px;
+    bottom: -100px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2; // Por encima de las auras
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .lead {
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    .btn-lg {
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  }
+}
+// (Estilos del Hero, Marquee y CTA sin cambios significativos, 
+// solo asegúrate de que no tengan 'animation' definida por defecto)
+
+// --- ESTILOS PARA LA ANIMACIÓN DE SCROLL ---
+.section-to-animate {
+  opacity: 0; // Empieza invisible
+  transform: translateY(40px); // Empieza ligeramente abajo
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out; // Transición suave
+}
+
+.section-to-animate.animate-on-scroll {
+  opacity: 1; // Se vuelve visible
+  transform: translateY(0); // Vuelve a su posición original
+}
+// --- FIN ESTILOS SCROLL ---
+
+
+// --- NUEVA SECCIÓN TEMPORAL: CÓMO FUNCIONA ---
+.how-it-works-section {
+  padding: 5rem 2rem;
+  background-color: var(--bg-primary); // Fondo principal
+
+  h2 {
+    font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+  .lead {
+    color: var(--text-secondary); margin-bottom: 3rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .step-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .step-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      // Animación sutil de pulso en hover
+      transition: transform 0.3s ease;
+      &:hover { transform: scale(1.1); }
+    }
+    h4 {
+      font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    p {
+      font-size: 0.95rem; color: var(--text-secondary);
+    }
+  }
+}
+// --- FIN SECCIÓN CÓMO FUNCIONA ---

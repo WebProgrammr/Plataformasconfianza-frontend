@@ -1,1 +1,27 @@
-<p>footer works!</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h4>Plataforma Confianza</h4>
+        <p>Activaciones digitales seguras y al instante.</p>
+      </div>
+      <div class="footer-links">
+        <h5>Navegación</h5>
+        <ul>
+          <li><a [routerLink]="['/']">Inicio</a></li>
+          <li><a [routerLink]="['/resenas']">Reseñas</a></li>
+          <li><a [routerLink]="['/login']">Login</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h5>Síguenos (Temporal)</h5>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Plataforma Confianza. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  width: 100%;
+  // Quitamos el background-color para que herede el del body
+}
+
+.resena-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary); // Oscuro -> Claro
+  }
+}
+
+.resena-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.resena-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px; // Más redondeado
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); // Sombra más fuerte
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 250px;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.4s ease;
+
+  &:hover {
+     transform: translateY(-8px); // Se eleva un poco
+     border-color: #ffc107; // Borde amarillo (color de estrellas)
+     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 193, 7, 0.4); // Glow amarillo
+  }
+
+  .stars {
+    color: #ffc107;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .comentario {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-secondary); // Oscuro -> Claro
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .autor {
+    font-size: 0.9rem;
+    color: var(--text-secondary); // Oscuro -> Claro
+    font-weight: bold;
+  }
+}
+
+.error-message {
+  color: red;
+}

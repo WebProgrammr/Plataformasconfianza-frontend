@@ -1,0 +1,25 @@
+<section class="product-section">
+  <h2>Servicios Populares</h2>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div class="product-grid">
+    <div *ngFor="let producto of productos" class="product-card">
+      <img [src]="producto.imagenUrl || 'assets/images/default-product.png'" [alt]="producto.nombre">
+      <div class="card-content">
+        <h3>
+          <i class="fas fa-play-circle me-2"></i>
+          {{ producto.nombre }}
+        </h3>
+        <p class="product-desc">{{ producto.descripcion }}</p>
+        <p class="product-price">{{ producto.precio | currency:'USD' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!errorMessage && productos.length === 0">
+    <p>No hay servicios disponibles en este momento.</p>
+  </div>
+</section>

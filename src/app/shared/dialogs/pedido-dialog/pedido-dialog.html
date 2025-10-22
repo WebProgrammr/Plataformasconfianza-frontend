@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Realizar Pedido para: {{ productoNombre }}</h2>
+
+<mat-dialog-content [formGroup]="pedidoForm">
+  <p>Por favor, completa tus datos para continuar con el pedido:</p>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre Completo</mat-label>
+    <input matInput formControlName="nombreCliente" required>
+    <mat-error *ngIf="pedidoForm.get('nombreCliente')?.hasError('required')">Tu nombre es requerido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="emailCliente" required>
+    <mat-error *ngIf="pedidoForm.get('emailCliente')?.hasError('required')">Tu email es requerido</mat-error>
+    <mat-error *ngIf="pedidoForm.get('emailCliente')?.hasError('email')">Ingresa un email válido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>WhatsApp</mat-label>
+    <input matInput formControlName="whatsappCliente" required placeholder="Ej: +51987654321">
+     <mat-error *ngIf="pedidoForm.get('whatsappCliente')?.hasError('required')">Tu WhatsApp es requerido</mat-error>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!pedidoForm.valid">
+    Enviar Pedido
+  </button>
+</mat-dialog-actions>

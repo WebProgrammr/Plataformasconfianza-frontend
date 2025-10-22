@@ -1,0 +1,52 @@
+<div class="auth-container">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+  
+  <div class="auth-card section-fade-in">
+    <h2>Deja tu Reseña</h2>
+    <p class="text-secondary text-center mb-4">Tu opinión es importante para nosotros.</p>
+
+    <form [formGroup]="resenaForm" (ngSubmit)="onSubmit()">
+
+      <div *ngIf="successMessage" class="message success mb-3">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="message error mb-3">
+        {{ errorMessage }}
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">
+          <i class="fas fa-star"></i>
+        </span>
+        <select class="form-select" formControlName="calificacion">
+          <option [ngValue]="null" disabled>Selecciona una calificación</option>
+          <option [ngValue]="5">★★★★★ (5 Estrellas)</option>
+          <option [ngValue]="4">★★★★☆ (4 Estrellas)</option>
+          <option [ngValue]="3">★★★☆☆ (3 Estrellas)</option>
+          <option [ngValue]="2">★★☆☆☆ (2 Estrellas)</option>
+          <option [ngValue]="1">★☆☆☆☆ (1 Estrella)</option>
+        </select>
+      </div>
+      <div *ngIf="resenaForm.get('calificacion')?.invalid && resenaForm.get('calificacion')?.touched" class="field-error">
+        <small *ngIf="resenaForm.get('calificacion')?.errors?.['required']">La calificación es obligatoria.</small>
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">
+          <i class="fas fa-comment-dots"></i>
+        </span>
+        <textarea class="form-control" formControlName="comentario" rows="5" placeholder="Escribe tu comentario..."></textarea>
+      </div>
+       <div *ngIf="resenaForm.get('comentario')?.invalid && resenaForm.get('comentario')?.touched" class="field-error">
+        <small *ngIf="resenaForm.get('comentario')?.errors?.['required']">El comentario es obligatorio.</small>
+      </div>
+
+      <button type="submit" [disabled]="resenaForm.invalid || successMessage" class="btn btn-primary w-100 rounded-pill mt-4">
+        <i class="fas fa-paper-plane me-2"></i>
+        Enviar Reseña
+      </button>
+      
+    </form>
+  </div>
+</div>

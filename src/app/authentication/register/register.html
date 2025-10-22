@@ -1,1 +1,85 @@
-<p>register works!</p>
+<div class="auth-page-wrapper" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+  <div class="aura aura-3"></div>
+  
+  <div class="auth-card-wrapper">
+    <div class="auth-form-column">
+      <h2 class="auth-title">Crear Cuenta</h2>
+      <p class="auth-subtitle">Únete a nuestra plataforma.</p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="successMessage" class="message success mb-3 animated-message">
+          {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="message error mb-3 animated-message">
+          {{ errorMessage }}
+        </div>
+        
+        <div class="input-group animated-field delay-1">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input type="text" class="form-control" placeholder="Nombre Completo" formControlName="nombre">
+        </div>
+        <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="field-error">
+          <small>El nombre es obligatorio.</small>
+        </div>
+        
+        <div class="input-group animated-field delay-2">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input type="email" class="form-control" placeholder="Email" formControlName="email">
+        </div>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="field-error">
+          <small>El email es obligatorio y debe ser válido.</small>
+        </div>
+
+        <div class="input-group animated-field delay-3">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" placeholder="Contraseña (mín. 6 caracteres)" formControlName="password">
+        </div>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="field-error">
+          <small>La contraseña es obligatoria (mín. 6 caracteres).</small>
+        </div>
+
+        <label class="form-label animated-field delay-4" style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem; margin-bottom: 0.25rem;">Número de WhatsApp</label>
+        <div class="input-group animated-field delay-4">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" 
+                  style="border-color: var(--border-color); color: var(--text-secondary);">
+            PE
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#">PE (+51)</a></li>
+            <li><a class="dropdown-item" href="#">MX (+52)</a></li>
+            <li><a class="dropdown-item" href="#">CO (+57)</a></li>
+          </ul>
+          <input type="tel" class="form-control" placeholder="(Ejemplo 987654321)" formControlName="whatsapp">
+        </div>
+        <div *ngIf="registerForm.get('whatsapp')?.invalid && registerForm.get('whatsapp')?.touched" class="field-error">
+          <small>El WhatsApp es obligatorio.</small>
+        </div>
+        
+        <div class="input-group animated-field delay-5">
+          <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
+          <input type="text" class="form-control" placeholder="Código de Referencia (Obligatorio)" formControlName="codigoReferenciaUsado">
+        </div>
+        <div *ngIf="registerForm.get('codigoReferenciaUsado')?.invalid && registerForm.get('codigoReferenciaUsado')?.touched" class="field-error">
+          <small>El código de referencia es obligatorio.</small>
+        </div>
+
+        <button type="submit" [disabled]="registerForm.invalid || successMessage" class="btn-primary-gradient w-100 rounded-pill animated-field delay-6">
+          <i class="fas fa-user-plus me-2"></i>
+          Registrarme
+        </button>
+
+        <div class="auth-link animated-field delay-7">
+          ¿Ya tienes cuenta? <a [routerLink]="['/login']">Inicia sesión</a>
+        </div>
+      </form>
+    </div>
+    
+    <div class="auth-graphic-column">
+      <div class="graphic-placeholder">
+        (Aquí va tu logo o gráfico neón)
+      </div>
+    </div>
+  </div>
+</div>

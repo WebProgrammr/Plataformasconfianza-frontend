@@ -1,0 +1,54 @@
+<div class="services-page-wrapper">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+
+  <section class="page-header section-fade-in">
+    <div class="container text-center">
+      <h1>Nuestro Catálogo de Servicios</h1>
+      <p class="lead text-secondary">Encuentra y activa tus plataformas y software favoritos al instante.</p>
+    </div>
+  </section>
+
+  <section class="search-bar-section section-fade-in delay-1">
+    <div class="container">
+      <div class="input-group input-group-lg search-input-group">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <input type="text" class="form-control" placeholder="Buscar servicio (ej. Netflix, Office...)">
+      </div>
+    </div>
+  </section>
+
+  <section class="services-grid-section">
+    <div class="container">
+      <div *ngIf="isLoading" class="loading">
+        <p>Cargando servicios...</p>
+      </div>
+      
+      <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <div *ngIf="!isLoading && !errorMessage" class="services-grid">
+        <div *ngFor="let producto of productos" class="service-card">
+           <img [src]="producto.imagenUrl || 'assets/images/default-product.png'" [alt]="producto.nombre">
+           <div class="card-content">
+             <h3>
+               <i class="fas fa-play-circle me-2"></i> {{ producto.nombre }}
+             </h3>
+             <p class="service-desc">{{ producto.descripcion }}</p>
+             <div class="card-footer">
+               <span class="service-price">{{ producto.precio | currency:'USD' }}</span>
+               <a href="#" class="btn btn-sm btn-outline-primary rounded-pill">
+                 Ver Detalles
+               </a>
+             </div>
+           </div>
+        </div>
+      </div>
+       <div *ngIf="!isLoading && productos.length === 0">
+        <p class="text-center text-secondary mt-5">No hay servicios disponibles.</p>
+      </div>
+    </div>
+  </section>
+
+</div>

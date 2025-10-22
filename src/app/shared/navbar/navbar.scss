@@ -1,0 +1,79 @@
+.navbar {
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+  // z-index ya no se necesita aquí, se maneja en app.component
+}
+
+.floating-pill {
+  width: 95%;
+  max-width: 1400px;
+  margin: 1rem auto 0 auto;
+  border-radius: 50rem;
+  
+  // --- CAMBIO A DARK GLASS ---
+  background: rgba(30, 30, 30, 0.75); // Fondo de cristal oscuro
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  border: 1px solid rgba(255, 255, 255, 0.1); // Borde claro
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+// --- TEXTO CLARO PARA MODO OSCURO ---
+.navbar-brand {
+  font-weight: bold;
+  color: var(--text-primary) !important;
+}
+
+.nav-link {
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  border-radius: 50rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: var(--text-primary) !important;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  &.active {
+    color: var(--primary-color) !important;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+}
+
+// Botón Toggler (para el icono fas fa-bars)
+.navbar-toggler {
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+// Botones
+.btn-primary.rounded-pill {
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+}
+
+// --- RESPONSIVE ---
+@media (max-width: 991.98px) {
+  .floating-pill {
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0; 
+    background: rgba(30, 30, 30, 0.95); // Más opaco
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .navbar-nav .nav-item {
+    padding: 0.25rem 0;
+  }
+}

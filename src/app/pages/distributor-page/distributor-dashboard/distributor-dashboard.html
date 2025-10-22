@@ -1,0 +1,27 @@
+<div class="admin-layout">
+  
+  <nav class="admin-sidebar">
+    <h3>Distribuidor Panel</h3>
+    <ul class="admin-menu">
+      <li>
+        <a 
+          [routerLink]="['/distribuidor/comisiones']" 
+          routerLinkActive="active">
+          Mis Comisiones
+        </a>
+      </li>
+      <li>
+        <a 
+          [routerLink]="['/distribuidor/referidos']" 
+          routerLinkActive="active">
+          Mis Referidos (Temporal)
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+  
+</div>

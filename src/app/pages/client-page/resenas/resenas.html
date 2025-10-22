@@ -1,0 +1,39 @@
+<section class="resena-page-section section-fade-in">
+  <div class="aura aura-1"></div>
+  <div class="aura aura-2"></div>
+  
+  <div class="container">
+    <h2>Todas nuestras reseñas</h2>
+    <p class="text-secondary">La opinión de nuestros clientes sobre nuestros productos y servicios.</p>
+
+    <div *ngIf="authService.isLoggedIn()" class="escribir-resena-cta">
+      <a [routerLink]="['/escribir-resena']" class="btn btn-primary btn-lg rounded-pill">
+        <i class="fas fa-pencil-alt me-2"></i>
+        Escribe tu propia reseña
+      </a>
+    </div>
+
+    <div *ngIf="isLoading" class="loading">
+      <p>Cargando reseñas...</p>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage" class="resena-grid">
+      <div *ngFor="let resena of resenas" class="resena-card">
+        <div class="stars">
+          <span *ngFor="let _ of getStars(resena.calificacion)">★</span>
+        </div>
+        <p class="comentario">"{{ resena.comentario }}"</p>
+        <small class="autor">Usuario (ID: {{ resena.idUsuario }})</small>
+        <small class="fecha">{{ resena.fechaResena | date:'short' }}</small>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && resenas.length === 0">
+      <p>Aún no hay reseñas. ¡Sé el primero!</p>
+    </div>
+  </div>
+</section>

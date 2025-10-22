@@ -1,0 +1,10 @@
+/* src/app/shared/dialogs/producto-dialog/producto-dialog.scss */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem; /* Espacio entre campos */
+}
+
+mat-dialog-content {
+  min-width: 300px; /* Ancho mínimo del contenido */
+  max-width: 500px; /* Ancho máximo */
+}

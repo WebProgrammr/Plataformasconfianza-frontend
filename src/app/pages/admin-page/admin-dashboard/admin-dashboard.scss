@@ -1,0 +1,77 @@
+:host {
+  display: block;
+  // **CRUCIAL:** Ocupa toda la altura de la ventana
+  height: 100vh; 
+  // **CRUCIAL:** Empuja TODO el componente hacia abajo para dejar espacio exacto al padding del body // Usa el MISMO valor que el padding-top del body en app.component.scss
+  box-sizing: border-box; // Incluye el padding en la altura total
+  background-color: #f4f7f6; // Fondo claro general para toda la vista admin
+  width: 100%;
+}
+
+// Ajuste para móvil (debe coincidir con el padding-top móvil del body)
+@media (max-width: 991.98px) {
+  :host {
+    padding-top: 74px; // Usa el MISMO valor que el padding-top móvil del body
+    // La altura sigue siendo 100vh
+  }
+}
+
+.admin-layout {
+  display: flex;
+  // **CRUCIAL:** Ahora la altura es 100% del espacio *restante* DENTRO del :host (después del padding-top)
+  height: 100%; 
+  width: 100%;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: #2c3e50; 
+  color: #ecf0f1;
+  padding: 2rem 1rem;
+  height: 100%; // Ocupa toda la altura del layout
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+}
+
+.admin-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li a {
+    display: block;
+    padding: 1rem;
+    color: #ecf0f1;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #34495e;
+    }
+
+    &.active {
+      background-color: #007bff; 
+      font-weight: bold;
+      color: #fff; 
+    }
+  }
+}
+
+.admin-content {
+  flex-grow: 1; 
+  padding: 2rem;
+  overflow-y: auto; 
+  height: 100%; // Ocupa toda la altura del layout
+  padding-top: 90px;
+  background-color: #ffffff; 
+  box-shadow: inset 3px 0px 5px -2px rgba(0,0,0,0.1);
+}

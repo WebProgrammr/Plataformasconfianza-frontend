@@ -1,0 +1,90 @@
+<div class="admin-page">
+  <div class="page-header">
+    <h2>Gestionar Productos</h2>
+    <button (click)="abrirModal()" class="btn-primary">
+      Crear Nuevo Producto
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <p>Cargando productos...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="message error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="message success">
+    {{ successMessage }}
+  </div>
+
+  <table *ngIf="!isLoading" class="admin-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio | currency:'USD' }}</td>
+        <td class="desc-cell">{{ producto.descripcion }}</td>
+        <td class="actions-cell">
+          <button (click)="abrirModal(producto)" class="btn-edit">
+            Editar
+          </button>
+          <button (click)="eliminarProducto(producto.id)" class="btn-delete">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="isModalOpen" class="modal-overlay" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>{{ isEditMode ? 'Editar' : 'Crear' }} Producto</h3>
+    
+    <form [formGroup]="productForm" (ngSubmit)="guardarProducto()">
+      
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" type="text" formControlName="nombre">
+        <div *ngIf="productForm.get('nombre')?.invalid && productForm.get('nombre')?.touched" class="field-error">
+          <small *ngIf="productForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input id="precio" type="number" formControlName="precio">
+         <div *ngIf="productForm.get('precio')?.invalid && productForm.get('precio')?.touched" class="field-error">
+          <small *ngIf="productForm.get('precio')?.errors?.['min']">El precio debe ser mayor a 0.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" formControlName="descripcion" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="imagenUrl">URL de Imagen:</label>
+        <input id="imagenUrl" type="text" formControlName="imagenUrl">
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="cerrarModal()" class="btn-secondary">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="productForm.invalid" class="btn-primary">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

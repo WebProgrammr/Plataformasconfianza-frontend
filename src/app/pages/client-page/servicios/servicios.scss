@@ -1,0 +1,194 @@
+// Importamos variables globales si es necesario (ej. para colores)
+// @use '../../../styles/variables' as vars; 
+
+:host {
+  display: block;
+}
+
+.services-page-wrapper {
+  position: relative;
+  overflow: hidden; // Contiene las auras
+  padding-bottom: 4rem; // Espacio antes del footer
+}
+
+/* --- Auras de Fondo --- */
+.aura {
+  position: absolute;
+  filter: blur(180px); // Más borroso
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0.15;
+}
+.aura-1 {
+  width: 600px; height: 600px;
+  background: var(--primary-color);
+  left: -250px; top: 100px;
+}
+.aura-2 {
+  width: 500px; height: 500px;
+  background: #ffc107;
+  right: -200px; top: 400px;
+}
+
+/* --- Encabezado de Página --- */
+.page-header {
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative; z-index: 2;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .lead {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* --- Barra de Búsqueda --- */
+.search-bar-section {
+  position: relative; z-index: 2;
+  margin-bottom: 4rem;
+  
+  .container { max-width: 800px; } // Limita el ancho de la barra
+
+  .search-input-group {
+    border-radius: 50rem; // Píldora
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+    .input-group-text {
+      background: transparent;
+      border: none;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    .form-control {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      &:focus {
+        box-shadow: none; // Sin glow aquí
+      }
+      &::placeholder { color: var(--text-secondary); }
+    }
+  }
+}
+
+/* --- Cuadrícula de Servicios --- */
+.services-grid-section {
+  position: relative; z-index: 2;
+}
+
+.services-grid {
+  display: grid;
+  // Columnas más grandes que en la Home
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+  gap: 2.5rem; // Más espacio
+}
+
+/* --- Tarjeta de Servicio Mejorada --- */
+.service-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; // Para alinear el footer abajo
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.4s ease;
+              
+  // Animación de entrada (para el observer)
+  opacity: 0; 
+  transform: translateY(30px);
+
+  &.animate-on-scroll { // Clase que añade el observer
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 0 40px var(--primary-glow);
+  }
+
+  img {
+    width: 100%;
+    height: 180px; // Un poco más pequeña
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    flex-grow: 1; // Empuja el footer hacia abajo
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: 1.2rem; // Ligeramente más pequeño
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    i { color: var(--primary-color); }
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    flex-grow: 1; // Ocupa espacio disponible
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; // Empuja al fondo
+    padding-top: 1rem; // Espacio arriba
+    border-top: 1px solid var(--border-color); // Separador
+  }
+
+  .service-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+   .btn-outline-primary {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+      font-weight: 500;
+      &:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+   }
+}
+
+/* --- Mensajes --- */
+.loading, .error-message {
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+.error-message { color: red; }
+
+/* --- Animación de Scroll - Clases de Ayuda --- */
+.section-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.2s; } // Para la barra de búsqueda

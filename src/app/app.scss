@@ -1,0 +1,32 @@
+// Quitamos el padding-top de aquí, ya que ahora es condicional o manejado por el componente hijo
+// .main-content {
+//   padding-top: 100px; 
+// }
+
+:host {
+  ::ng-deep app-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    transition: top 0.4s ease-in-out;
+  }
+
+  ::ng-deep app-navbar.navbar-hidden {
+    top: -120px; 
+  }
+
+  // Ajustamos el padding del body globalmente
+  // Esto asegura que todo el contenido (admin o no) empiece debajo del navbar
+  ::ng-deep body {
+     padding-top: 100px; // Ajusta este valor si la altura del navbar cambia
+  }
+
+  // En móvil, el padding es menor
+  @media (max-width: 991.98px) {
+     ::ng-deep body {
+       padding-top: 70px; // Ajusta si la altura del navbar móvil cambia
+     }
+  }
+}
