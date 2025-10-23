@@ -23,3 +23,15 @@ export interface PedidoPayload {
   whatsappCliente: string;
   idProducto: number;
 }
+
+export interface DashboardSummary {
+  totalComprasCompletadas: number;
+  saldoActual: number;
+}
+
+export interface RecargaRequestPayload {
+  monto: number;
+  metodoPago: string; // Ej: "YAPE", "BCP"
+  comprobanteUrl?: string; // Opcional
+  nota?: string; 
+}

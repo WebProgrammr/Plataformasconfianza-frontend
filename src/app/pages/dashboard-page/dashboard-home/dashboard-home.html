@@ -1,45 +1,84 @@
 <div class="dashboard-home">
-  <h2><i class="fas fa-chart-line me-2 icon-glow"></i> Resumen General</h2> <div class="summary-cards">
-    <div class="summary-card compras"> <i class="fas fa-shopping-cart card-icon"></i>
+  <h2><i class="fas fa-chart-line me-2 icon-glow"></i> Resumen General</h2>
+
+  <!-- Mensaje de error si falla la carga del resumen -->
+  <div *ngIf="errorMessage" class="message error anim-fade-in mb-4">
+    <i class="fas fa-exclamation-triangle me-2"></i> {{ errorMessage }}
+  </div>
+
+  <div class="summary-cards">
+    <div class="summary-card compras">
+       <i class="fas fa-shopping-cart card-icon"></i>
       <h3>Total Compras</h3>
-      <p class="big-number">S/ 0.00</p>
-      <small>(Simulado)</small>
+      <!-- Mostrar spinner mientras carga -->
+      <div *ngIf="isLoading" class="spinner-inline"></div>
+      <!-- Mostrar dato si no está cargando y no hay error -->
+      <p *ngIf="!isLoading && !errorMessage" class="big-number">
+        {{ (summaryData?.totalComprasCompletadas ?? 0) | currency:'S/ ' }}
+      </p>
+      <!-- Mostrar '-' si hubo error -->
+      <p *ngIf="!isLoading && errorMessage" class="big-number">-</p>
+      <small *ngIf="!isLoading && !errorMessage">(Pedidos completados)</small>
     </div>
+
     <div class="summary-card saldo">
        <i class="fas fa-wallet card-icon"></i>
       <h3>Saldo Actual</h3>
-      <p class="big-number">S/ 0.00</p>
-       <button class="btn btn-sm btn-info btn-glow" [routerLink]="['/dashboard/recarga']"> <i class="fas fa-plus-circle me-1"></i> Recargar
+       <!-- Mostrar spinner mientras carga -->
+       <div *ngIf="isLoading" class="spinner-inline"></div>
+       <!-- Mostrar dato si no está cargando y no hay error -->
+       <p *ngIf="!isLoading && !errorMessage" class="big-number">
+         {{ (summaryData?.saldoActual ?? 0) | currency:'S/ ' }} <!-- MOSTRAR SALDO REAL -->
+       </p>
+       <!-- Mostrar '-' si hubo error -->
+       <p *ngIf="!isLoading && errorMessage" class="big-number">-</p>
+       <button class="btn btn-sm btn-info btn-glow" [routerLink]="['/dashboard/recarga']">
+         <i class="fas fa-plus-circle me-1"></i> Recargar
        </button>
     </div>
+
+    <!-- Tarjeta de Referidos (solo si es distribuidor) -->
     <div class="summary-card referidos" *ngIf="authService.getRole() === 'DISTRIBUIDOR'">
         <i class="fas fa-users card-icon"></i>
         <h3>Referidos</h3>
+        <!-- Simulados por ahora -->
         <p class="big-number">0</p>
         <small>(Simulado)</small>
     </div>
+
+    <!-- Tarjeta de Tickets (simulada) -->
     <div class="summary-card tickets">
         <i class="fas fa-headset card-icon"></i>
         <h3>Tickets Soporte</h3>
+        <!-- Simulados por ahora -->
         <p class="big-number">0</p>
         <small>(Simulado)</small>
     </div>
   </div>
 
-  <div class="quick-actions card-style"> <h3><i class="fas fa-bolt me-2 icon-glow-secondary"></i> Acciones Rápidas</h3> <button class="btn btn-outline-light">
+  <!-- Quick Actions -->
+  <div class="quick-actions card-style">
+     <h3><i class="fas fa-bolt me-2 icon-glow-secondary"></i> Acciones Rápidas</h3>
+     <!-- Enlace a Mis Pedidos -->
+    <button class="btn btn-outline-light" [routerLink]="['/dashboard/pedidos']">
       <i class="fas fa-history me-2"></i> Ver Mis Pedidos
     </button>
+    <!-- Botón Mis Comisiones (solo distribuidor) -->
     <button class="btn btn-outline-light" *ngIf="authService.getRole() === 'DISTRIBUIDOR'">
        <i class="fas fa-dollar-sign me-2"></i> Ver Mis Comisiones
     </button>
+    <!-- Enlace Editar Perfil (aún sin funcionalidad) -->
      <button class="btn btn-outline-light">
        <i class="fas fa-user-edit me-2"></i> Editar Perfil
     </button>
   </div>
 
-   <div class="empty-state card-style" *ngIf="true"> <img src="assets/images/flork-placeholder.png" alt="Sin actividad reciente">
+   <!-- Placeholder -->
+   <div class="empty-state card-style" *ngIf="!isLoading && !errorMessage && !summaryData?.totalComprasCompletadas && !summaryData?.saldoActual"> <!-- Mostrar si no hay compras NI saldo -->
+      <img src="assets/images/flork-placeholder.png" alt="Sin actividad reciente">
       <h4>¡Todo en orden por aquí!</h4>
-      <p>Realiza tu compra cuando quieras, no hay prisa.</p>
+      <p>Realiza tu compra o recarga saldo cuando quieras.</p>
    </div>
 
 </div>
+

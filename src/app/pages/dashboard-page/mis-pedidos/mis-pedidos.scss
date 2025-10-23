@@ -1,0 +1,315 @@
+// Importar variables si es necesario (asumiendo que están en styles.scss)
+// @use '../../../styles/variables' as vars;
+
+// Keyframes para animaciones
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtleShine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Estilos base de la página
+.mis-pedidos-page {
+  h2 {
+    color: var(--text-glow);
+    margin-bottom: 2.5rem; // Más espacio
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    text-shadow: 0 0 10px var(--primary-glow); // Glow en título
+
+    .icon-glow {
+      color: var(--primary-color-light);
+      margin-right: 0.8rem;
+      font-size: 1.6rem; // Icono un poco más pequeño que el texto
+    }
+  }
+}
+
+// Contenedor del spinner de carga
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(var(--primary-color-rgb), 0.3);
+    border-top-color: var(--primary-color-light);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+}
+
+// Mensajes de error e info (mejorados)
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  font-size: 0.95rem;
+
+  i {
+    margin-right: 0.7rem;
+    font-size: 1.1rem;
+  }
+
+  &.error {
+    background-color: rgba(var(--danger-color-rgb), 0.1);
+    color: var(--danger-color);
+    border-color: rgba(var(--danger-color-rgb), 0.3);
+    text-shadow: 0 0 8px rgba(var(--danger-color-rgb), 0.3);
+  }
+
+  &.info {
+    background-color: rgba(var(--info-color-rgb), 0.08);
+    color: var(--text-secondary);
+    border-color: rgba(var(--info-color-rgb), 0.2);
+
+    a {
+      color: var(--primary-color-light);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 0.3rem;
+      &:hover {
+        color: var(--info-color);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Animación de entrada para mensajes y tabla
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+.table-container.has-content { // Aplicar delay solo cuando hay contenido
+   animation-delay: 0.2s;
+}
+
+
+// Contenedor de la tabla rediseñado
+.table-container {
+  border-radius: 12px;
+  overflow: hidden; // Crucial para border-radius en tabla
+  background: linear-gradient(145deg, rgba(var(--bg-surface-rgb), 0.95), rgba(var(--bg-surface-light-rgb, 26, 26, 35), 0.98)); // Fondo con gradiente y transparencia
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px var(--shadow-color-strong), // Sombra más profunda
+              inset 0 0 15px rgba(var(--primary-color-rgb), 0.05); // Brillo interior sutil
+  position: relative; // Para pseudo-elementos
+  margin-top: 2rem;
+
+  // Línea de borde superior animada (opcional)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color-light), transparent);
+    background-size: 200% 100%;
+    animation: subtleShine 3s linear infinite;
+    opacity: 0.7;
+  }
+}
+
+// Tabla con estilo futurista
+.futuristic-table {
+  width: 100%;
+  border-collapse: collapse; // Quitar espacios entre celdas
+  color: var(--text-primary);
+  font-size: 0.9rem; // Tamaño de fuente base
+
+  th, td {
+    padding: 14px 18px; // Padding interno
+    text-align: left;
+    vertical-align: middle; // Alinear verticalmente al centro
+    border-bottom: 1px solid var(--border-color); // Línea divisoria sutil
+    white-space: nowrap; // Evitar que el texto se parta por defecto
+  }
+
+  // Cabecera de la tabla
+  thead th {
+    background-color: transparent; // Sin fondo
+    color: var(--text-secondary); // Color secundario
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px; // Espaciado
+    font-size: 0.75rem; // Más pequeño
+    border-bottom: 2px solid var(--border-color-light); // Borde inferior más grueso
+    position: sticky; // Mantener cabecera visible (opcional)
+    top: 0;           // Necesario con sticky
+    z-index: 1;       // Por encima de las filas
+
+    i { // Iconos en la cabecera
+      margin-right: 8px;
+      opacity: 0.7;
+      color: var(--primary-color-light); // Iconos con color
+    }
+  }
+
+  // Cuerpo de la tabla
+  tbody {
+    tr {
+      background-color: transparent; // Fondo transparente
+      transition: background-color 0.25s ease-out; // Transición suave
+
+      &:last-child td {
+        border-bottom: none; // Sin borde en la última fila
+      }
+
+      &:hover {
+        background-color: var(--bg-surface-hover); // Fondo al pasar el ratón
+        td {
+          // color: var(--text-glow); // Opcional: texto más brillante en hover
+        }
+      }
+    }
+
+    td {
+      color: var(--text-primary); // Texto principal
+
+      // Estilos específicos para celdas si es necesario
+      &[data-label="Precio"] {
+        font-weight: 500;
+        color: var(--info-color); // Precio en color cyan
+      }
+      &[data-label="Contacto"] {
+        color: var(--text-secondary);
+        font-style: italic;
+      }
+    }
+  }
+
+  // Badges de estado rediseñados
+  .status-badge {
+    padding: 0.3em 0.8em;
+    border-radius: 50rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex; // Para alinear icono y texto
+    align-items: center;
+    gap: 0.4em; // Espacio entre icono y texto
+    border: 1px solid transparent;
+    line-height: 1.2;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5); // Sombra de texto sutil
+
+    i { // Estilo del icono dentro del badge
+      font-size: 0.8em; // Icono un poco más pequeño
+      line-height: 1; // Ajustar línea para alinear
+    }
+
+    &.status-pending {
+      background: linear-gradient(45deg, rgba(var(--warning-color-rgb), 0.2), rgba(var(--warning-color-rgb), 0.1));
+      color: var(--warning-color);
+      border-color: rgba(var(--warning-color-rgb), 0.4);
+      box-shadow: 0 0 8px rgba(var(--warning-color-rgb), 0.3), inset 0 0 5px rgba(var(--warning-color-rgb), 0.1);
+    }
+
+    &.status-completed {
+      background: linear-gradient(45deg, rgba(var(--success-color-rgb), 0.2), rgba(var(--success-color-rgb), 0.1));
+      color: var(--success-color);
+      border-color: rgba(var(--success-color-rgb), 0.4);
+      box-shadow: 0 0 8px rgba(var(--success-color-rgb), 0.3), inset 0 0 5px rgba(var(--success-color-rgb), 0.1);
+    }
+
+    &.status-cancelled {
+      background: linear-gradient(45deg, rgba(var(--danger-color-rgb), 0.2), rgba(var(--danger-color-rgb), 0.1));
+      color: var(--danger-color);
+      border-color: rgba(var(--danger-color-rgb), 0.4);
+      box-shadow: 0 0 8px rgba(var(--danger-color-rgb), 0.3), inset 0 0 5px rgba(var(--danger-color-rgb), 0.1);
+    }
+
+    &.status-unknown {
+      background: linear-gradient(45deg, rgba(108, 117, 125, 0.2), rgba(108, 117, 125, 0.1)); // Gris secundario
+      color: var(--secondary-color);
+      border-color: rgba(108, 117, 125, 0.4);
+      box-shadow: 0 0 8px rgba(108, 117, 125, 0.3), inset 0 0 5px rgba(108, 117, 125, 0.1);
+    }
+  }
+
+  // --- RESPONSIVE (Simple: Scroll Horizontal) ---
+  @media (max-width: 768px) {
+    // Esconder cabecera real
+    thead {
+      display: none;
+    }
+    // Mostrar filas como bloques
+    tbody, tr, td {
+      display: block;
+      width: 100%;
+    }
+    tr {
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: var(--bg-surface); // Fondo individual para cada "tarjeta"
+      box-shadow: 0 4px 10px var(--shadow-color-soft);
+
+      &:last-child {
+         margin-bottom: 0; // Sin margen extra en la última
+      }
+    }
+    td {
+      border: none; // Quitar bordes internos
+      border-bottom: 1px dashed var(--border-color-light); // Línea punteada entre datos
+      padding-left: 50%; // Espacio para la etiqueta
+      position: relative;
+      white-space: normal; // Permitir que el texto se ajuste
+      text-align: right; // Alinear valor a la derecha
+
+      &:last-child {
+         border-bottom: none; // Sin línea en el último dato
+      }
+
+      // Añadir etiqueta usando el atributo data-label
+      &::before {
+        content: attr(data-label); // Tomar texto del atributo data-label
+        position: absolute;
+        left: 10px; // Alinear etiqueta a la izquierda
+        width: 45%; // Ancho de la etiqueta
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left; // Alinear texto de etiqueta a la izquierda
+        font-weight: 600;
+        color: var(--text-secondary); // Color secundario para la etiqueta
+        text-transform: uppercase;
+        font-size: 0.75rem;
+      }
+
+      // Ajuste para el badge de estado en móvil
+      &[data-label="Estado"] {
+         text-align: right; // Mantener alineación derecha
+         .status-badge {
+            // No necesita cambios específicos usualmente
+         }
+      }
+    }
+  } // Fin @media
+} // Fin .futuristic-table

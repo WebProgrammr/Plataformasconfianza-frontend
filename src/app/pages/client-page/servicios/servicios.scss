@@ -1,5 +1,5 @@
 // Importamos variables globales si es necesario (ej. para colores)
-// @use '../../../styles/variables' as vars; 
+// @use '../../../styles/variables' as vars;
 
 :host {
   display: block;
@@ -53,7 +53,7 @@
 .search-bar-section {
   position: relative; z-index: 2;
   margin-bottom: 4rem;
-  
+
   .container { max-width: 800px; } // Limita el ancho de la barra
 
   .search-input-group {
@@ -91,7 +91,7 @@
 .services-grid {
   display: grid;
   // Columnas más grandes que en la Home
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem; // Más espacio
 }
 
@@ -104,12 +104,12 @@
   overflow: hidden;
   display: flex;
   flex-direction: column; // Para alinear el footer abajo
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
               box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
               border-color 0.4s ease;
-              
+
   // Animación de entrada (para el observer)
-  opacity: 0; 
+  opacity: 0;
   transform: translateY(30px);
 
   &.animate-on-scroll { // Clase que añade el observer
@@ -178,13 +178,24 @@
 }
 
 /* --- Mensajes --- */
-.loading, .error-message {
-  padding: 2rem;
-  font-size: 1.2rem;
+.loading, .message { // Aplicar a ambos loading y message
+  padding: 1rem;     // Ajustar padding
+  font-size: 1rem;   // Ajustar tamaño fuente
   color: var(--text-secondary);
   text-align: center;
+  border-radius: 8px; // Añadir borde redondeado
+  margin-bottom: 2rem; // Espacio debajo
 }
-.error-message { color: red; }
+.message.error { // Estilo específico para error
+    color: var(--danger-color);
+    background-color: rgba(var(--danger-color-rgb), 0.1);
+    border: 1px solid rgba(var(--danger-color-rgb), 0.3);
+}
+.message.success { // Estilo específico para éxito
+    color: var(--success-color);
+    background-color: rgba(var(--success-color-rgb), 0.1);
+    border: 1px solid rgba(var(--success-color-rgb), 0.3);
+}
 
 /* --- Animación de Scroll - Clases de Ayuda --- */
 .section-fade-in {
@@ -192,3 +203,32 @@
   animation: fadeIn 0.8s ease-out forwards;
 }
 .delay-1 { animation-delay: 0.2s; } // Para la barra de búsqueda
+
+// Añadir keyframe fadeIn si no está global
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Añadir estilos para .message si no están globales
+.message {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+.message.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #f8d7da;
+  border: 1px solid var(--danger-color);
+}
+.message.success {
+  background-color: rgba(25, 135, 84, 0.1);
+  color: #d1e7dd;
+  border: 1px solid var(--success-color);
+}
+.anim-fade-in { // Animación para los mensajes de pedido
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}

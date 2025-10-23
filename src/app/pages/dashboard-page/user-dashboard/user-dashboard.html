@@ -1,5 +1,7 @@
-<div class="admin-layout dashboard-layout"> <nav class="admin-sidebar dashboard-sidebar">
-    <h3><i class="fas fa-user-shield me-2 icon-glow"></i> Mi Panel</h3> <ul class="admin-menu">
+<div class="admin-layout dashboard-layout">
+  <nav class="admin-sidebar dashboard-sidebar">
+    <h3><i class="fas fa-user-shield me-2 icon-glow"></i> Mi Panel</h3>
+    <ul class="admin-menu">
       <li>
         <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <i class="fas fa-tachometer-alt me-2"></i> Dashboard
@@ -20,7 +22,9 @@
          </a>
       </li>
       <li>
-        <a href="#"> <i class="fas fa-history me-2"></i> Mis Pedidos
+        <!-- Corregido: Quitamos el comentario inválido -->
+        <a [routerLink]="['/dashboard/pedidos']" routerLinkActive="active">
+           <i class="fas fa-history me-2"></i> Mis Pedidos
         </a>
       </li>
       <li>
@@ -29,13 +33,16 @@
       </li>
     </ul>
      <div class="sidebar-footer mt-auto">
-        <button class="btn btn-sm btn-outline-danger w-100">
+        <!-- Corregido: Comentario en formato HTML -->
+        <!-- Considera mover el logout al navbar.ts si no lo has hecho -->
+        <button class="btn btn-sm btn-outline-danger w-100" (click)="logout()"> <!-- Asumiendo método logout() en el TS -->
           <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
         </button>
      </div>
   </nav>
 
   <main class="admin-content dashboard-content">
+    <!-- RouterOutlet para mostrar los componentes hijos como MisPedidos -->
     <router-outlet></router-outlet>
   </main>
 

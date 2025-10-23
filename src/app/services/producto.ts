@@ -30,7 +30,7 @@ export class ProductoService {
     return this.http.put<Producto>(`${this.apiUrlAdmin}/${id}`, producto);
   }
 
-  eliminarProducto(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrlAdmin}/${id}`);
+  eliminarProducto(id: number): Observable<string> { 
+    return this.http.delete(`${this.apiUrlAdmin}/${id}`, { responseType: 'text' });
   }
 }

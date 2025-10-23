@@ -1,4 +1,3 @@
-// src/app/pages/admin-page/manage-products/manage-products.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,8 +42,9 @@ export class ManageProducts implements OnInit {
 
   cargarProductos(): void {
     this.isLoading = true;
-    this.errorMessage = null;
-    this.successMessage = null;
+    this.errorMessage = null; // Sigue limpiando el error al cargar
+    // NO LIMPIAR successMessage aquí para que persista después de una acción exitosa
+    // this.successMessage = null; // <-- LÍNEA COMENTADA/ELIMINADA
     this.productoService.getProductosAdmin().subscribe({
       next: (data: Producto[]) => {
         this.productos = data;
@@ -53,16 +53,19 @@ export class ManageProducts implements OnInit {
       error: (err: HttpErrorResponse) => {
         this.errorMessage = 'No se pudieron cargar los productos.';
         this.isLoading = false;
+        this.successMessage = null; // Si falla la carga, sí limpiamos el mensaje de éxito
       }
     });
   }
 
   abrirModalProducto(producto?: Producto): void {
+    // Limpiar mensajes antes de abrir el modal
+    this.successMessage = null;
+    this.errorMessage = null;
     const dialogRef = this.dialog.open(ProductoDialog, {
       width: '500px',
       disableClose: true,
       data: producto ? { ...producto } : null
-      // SIN panelClass
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -87,15 +90,23 @@ export class ManageProducts implements OnInit {
     action.subscribe({
         next: () => {
           this.successMessage = `${successMsg} exitosamente.`;
+          this.errorMessage = null; // Asegurar que no hay mensaje de error
           this.cargarProductos();
+          // Opcional: Ocultar mensaje después de 3 segundos
+          // setTimeout(() => { this.successMessage = null; }, 3000);
         },
-        error: () => {
-          this.errorMessage = `${errorMsg} el producto.`;
+        error: (err: HttpErrorResponse) => { // Mejorar manejo de error
+          this.errorMessage = `${errorMsg} el producto. ${err.error?.message || ''}`; // Intentar mostrar mensaje del backend
+          this.successMessage = null;
+          console.error('Error en guardarProducto:', err);
         }
       });
   }
 
   confirmarEliminar(id: number, nombre: string): void {
+    // Limpiar mensajes antes de abrir el modal
+    this.successMessage = null;
+    this.errorMessage = null;
     const dialogRef = this.dialog.open(ConfirmDialog, {
       width: '400px',
       disableClose: true,
@@ -103,7 +114,6 @@ export class ManageProducts implements OnInit {
         title: 'Confirmar Eliminación',
         message: `¿Estás seguro de que quieres eliminar el producto "${nombre}"? Esta acción no se puede deshacer.`
       }
-      // SIN panelClass
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -114,16 +124,32 @@ export class ManageProducts implements OnInit {
   }
 
   eliminarProducto(id: number): void {
-    this.errorMessage = null;
-    this.successMessage = null;
+    // No es necesario limpiar aquí porque se limpió en confirmarEliminar
+    // this.errorMessage = null;
+    // this.successMessage = null;
 
     this.productoService.eliminarProducto(id).subscribe({
       next: () => {
         this.successMessage = 'Producto eliminado exitosamente.';
-        this.cargarProductos();
+        this.errorMessage = null; // Asegurar que no hay mensaje de error
+        this.cargarProductos(); // Esto recargará la lista
+         // Opcional: Ocultar mensaje después de 3 segundos
+         // setTimeout(() => { this.successMessage = null; }, 3000);
       },
-      error: () => {
-        this.errorMessage = 'Error al eliminar el producto.';
+      error: (err: HttpErrorResponse) => { // Mejorar manejo de error
+        // Intentar obtener un mensaje más específico del backend
+        let detail = err.error || 'Error desconocido del servidor.';
+        // Si el backend envía el mensaje "No se puede eliminar..." que configuramos
+        if (typeof detail === 'string' && detail.includes('pedidos')) {
+           this.errorMessage = detail; // Mostrar mensaje específico de restricción
+        } else if (typeof detail === 'string') {
+           this.errorMessage = detail; // Mostrar otro mensaje de error del backend
+        }
+         else {
+           this.errorMessage = 'Error al eliminar el producto.'; // Mensaje genérico
+        }
+        this.successMessage = null;
+        console.error('Error en eliminarProducto:', err); // Loguear el error completo en consola del navegador
       }
     });
   }

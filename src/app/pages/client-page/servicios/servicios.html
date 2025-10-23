@@ -23,12 +23,17 @@
       <div *ngIf="isLoading" class="loading">
         <p>Cargando servicios...</p>
       </div>
-      
-      <div *ngIf="errorMessage" class="error-message">
-        <p>{{ errorMessage }}</p>
+
+      <div *ngIf="errorMessage" class="message error"> <p>{{ errorMessage }}</p>
       </div>
 
-      <div *ngIf="!isLoading && !errorMessage" class="services-grid">
+       <div *ngIf="pedidoSuccessMessage" class="message success anim-fade-in">
+         {{ pedidoSuccessMessage }}
+       </div>
+       <div *ngIf="pedidoErrorMessage" class="message error anim-fade-in">
+         {{ pedidoErrorMessage }}
+       </div>
+       <div *ngIf="!isLoading && !errorMessage" class="services-grid">
         <div *ngFor="let producto of productos" class="service-card">
            <img [src]="producto.imagenUrl || 'assets/images/default-product.png'" [alt]="producto.nombre">
            <div class="card-content">
@@ -37,16 +42,14 @@
              </h3>
              <p class="service-desc">{{ producto.descripcion }}</p>
              <div class="card-footer">
-               <span class="service-price">{{ producto.precio | currency:'USD' }}</span>
-               <a href="#" class="btn btn-sm btn-outline-primary rounded-pill">
-                 Ver Detalles
-               </a>
+               <span class="service-price">{{ producto.precio | currency:'S/ ' }}</span> <button (click)="abrirDialogoPedido(producto)" class="btn btn-sm btn-outline-primary rounded-pill">
+                 <i class="fas fa-shopping-cart me-1"></i> Solicitar
+               </button>
              </div>
            </div>
         </div>
       </div>
-       <div *ngIf="!isLoading && productos.length === 0">
-        <p class="text-center text-secondary mt-5">No hay servicios disponibles.</p>
+       <div *ngIf="!isLoading && !errorMessage && productos.length === 0"> <p class="text-center text-secondary mt-5">No hay servicios disponibles.</p>
       </div>
     </div>
   </section>

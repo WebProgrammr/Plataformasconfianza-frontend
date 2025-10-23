@@ -1,0 +1,72 @@
+<div class="admin-page manage-pedidos-page">
+  <h2><i class="fas fa-tasks me-2"></i> Gestionar Pedidos</h2>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando todos los pedidos...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="message error anim-fade-in">
+     <i class="fas fa-exclamation-triangle me-2"></i> {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="message success anim-fade-in">
+     <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && todosPedidos.length === 0" class="message info anim-fade-in">
+    <i class="fas fa-info-circle me-2"></i> No hay pedidos registrados en el sistema.
+  </div>
+
+  <div class="table-container anim-fade-in"
+       *ngIf="!isLoading && !errorMessage && todosPedidos.length > 0"
+       [class.has-content]="!isLoading && !errorMessage && todosPedidos.length > 0">
+    <table class="futuristic-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th><i class="fas fa-calendar-alt"></i> Fecha</th>
+          <th><i class="fas fa-user"></i> Cliente</th>
+          <th><i class="fab fa-whatsapp"></i> Contacto</th>
+          <th><i class="fas fa-box-open"></i> Producto</th>
+          <th><i class="fas fa-dollar-sign"></i> Precio</th>
+          <th><i class="fas fa-info-circle"></i> Estado Actual</th>
+          <th><i class="fas fa-cogs"></i> Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of todosPedidos">
+          <td data-label="ID">#{{ pedido.id }}</td>
+          <td data-label="Fecha">{{ pedido.fechaPedido | date:'dd/MM/yy HH:mm' }}</td>
+          <td data-label="Cliente">{{ pedido.nombreCliente }}</td>
+          <td data-label="Contacto">{{ pedido.whatsappCliente }}</td>
+          <td data-label="Producto">{{ getNombreProducto(pedido.idProducto) }}</td>
+          <td data-label="Precio">
+            <ng-container *ngIf="getPrecioProducto(pedido.idProducto) as precio; else noPrecio">
+              {{ precio | currency:'S/ ' }}
+            </ng-container>
+            <ng-template #noPrecio>-</ng-template>
+          </td>
+          <td data-label="Estado Actual">
+            <span class="status-badge" [ngClass]="getEstadoClass(pedido.estado)">
+               <i [ngClass]="getEstadoIconClass(pedido.estado)"></i>
+              {{ pedido.estado || 'Desconocido' }}
+            </span>
+          </td>
+          <td data-label="Acciones" class="actions-cell">
+            <button mat-icon-button [matMenuTriggerFor]="menuEstado" aria-label="Cambiar estado del pedido" title="Cambiar Estado">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menuEstado="matMenu">
+              <button mat-menu-item *ngFor="let estado of estadosPosibles"
+                      (click)="confirmarCambioEstado(pedido, estado)"
+                      [disabled]="pedido.estado?.toUpperCase() === estado.toUpperCase()">
+                <mat-icon [ngClass]="getEstadoClass(estado)">{{ getEstadoIconClass(estado).replace('fas fa-', '') }}</mat-icon>
+                <span>Marcar como {{ estado }}</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

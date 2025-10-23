@@ -1,0 +1,54 @@
+<div class="mis-pedidos-page">
+  <h2><i class="fas fa-history me-2 icon-glow"></i> Historial de Pedidos</h2> <!-- Título actualizado -->
+
+  <div *ngIf="isLoading" class="loading-container"> <!-- Contenedor para centrar -->
+    <div class="spinner"></div> <!-- Spinner CSS -->
+    <p>Cargando tus pedidos...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="message error anim-fade-in"> <!-- Usar anim-fade-in -->
+    <i class="fas fa-exclamation-triangle me-2"></i> {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && misPedidos.length === 0" class="message info anim-fade-in"> <!-- Usar anim-fade-in -->
+    <i class="fas fa-info-circle me-2"></i> Aún no has realizado ningún pedido. ¡Explora nuestros <a routerLink="/servicios">servicios</a>!
+  </div>
+
+  <!-- Añadir clase 'has-content' cuando hay pedidos -->
+  <div class="table-container anim-fade-in" *ngIf="!isLoading && !errorMessage && misPedidos.length > 0" [class.has-content]="!isLoading && !errorMessage && misPedidos.length > 0">
+    <table class="futuristic-table"> <!-- Nueva clase para la tabla -->
+      <thead>
+        <tr>
+          <th><i class="fas fa-calendar-alt"></i> Fecha</th>
+          <th><i class="fas fa-box-open"></i> Producto</th>
+          <th><i class="fas fa-dollar-sign"></i> Precio</th>
+          <th><i class="fas fa-tasks"></i> Estado</th>
+          <th><i class="fas fa-user"></i> Cliente</th>
+          <th><i class="fab fa-whatsapp"></i> Contacto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iterar sobre los pedidos -->
+        <tr *ngFor="let pedido of misPedidos">
+          <td data-label="Fecha">{{ pedido.fechaPedido | date:'dd/MM/yy HH:mm' }}</td>
+          <td data-label="Producto">{{ getNombreProducto(pedido.idProducto) }}</td>
+          <td data-label="Precio">
+            <ng-container *ngIf="getPrecioProducto(pedido.idProducto) as precio; else noPrecio">
+              {{ precio | currency:'S/ ' }}
+            </ng-container>
+            <ng-template #noPrecio>-</ng-template>
+          </td>
+          <td data-label="Estado">
+            <!-- Badge de estado con icono -->
+            <span class="status-badge" [ngClass]="getEstadoClass(pedido.estado)">
+               <i [ngClass]="getEstadoIconClass(pedido.estado)"></i>
+              {{ pedido.estado || 'Desconocido' }}
+            </span>
+          </td>
+          <td data-label="Cliente">{{ pedido.nombreCliente }}</td>
+          <td data-label="Contacto">{{ pedido.whatsappCliente }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

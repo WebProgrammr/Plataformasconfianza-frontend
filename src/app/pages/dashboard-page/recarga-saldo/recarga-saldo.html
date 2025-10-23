@@ -1,80 +1,175 @@
 <div class="recarga-saldo-page">
   <h2 class="page-title"><i class="fas fa-charging-station icon-glow-warning"></i> Recargar Saldo</h2>
 
+  <!-- Mensajes de feedback -->
+  <div *ngIf="successMessage" class="message success anim-fade-in mb-4">
+      <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="message error anim-fade-in mb-4">
+      <i class="fas fa-exclamation-triangle me-2"></i> {{ errorMessage }}
+  </div>
+
+  <!-- BANNER TILT 3D - Estilo del ejemplo -->
+  <div class="tilt-banner-container">
+    <div class="tilt-banner-card interactive-tilt-card"
+         (mousemove)="onMouseMove($event)" 
+         (mouseleave)="onMouseLeave()">
+      
+      <!-- Capas parallax de fondo -->
+      <div class="parallax-layer layer-1"></div>
+      <div class="parallax-layer layer-2"></div>
+      <div class="parallax-layer layer-3"></div>
+      
+      <!-- Partículas decorativas -->
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+      <div class="particle particle-4"></div>
+      <div class="particle particle-5"></div>
+      
+      <div class="banner-content">
+        <!-- Emoji/Ícono principal -->
+        <div class="banner-emoji">👻</div>
+        
+        <h2 class="banner-title">🤑 ¡Recarga de saldo! 💵</h2>
+        
+        <!-- Logos de métodos de pago -->
+        <div class="payment-logos">
+          <div class="payment-logo">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Yape</span>
+          </div>
+          <div class="payment-logo">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Plin</span>
+          </div>
+          <div class="payment-logo">
+            <i class="fab fa-bitcoin"></i>
+            <span>Binance</span>
+          </div>
+        </div>
+        
+        <h3 class="banner-platform">PLATAFORMA CONFIANZA</h3>
+        
+        <p class="banner-info">
+          <i class="fas fa-info-circle"></i>
+          Puedes recargar desde <strong>s/5 lukitas</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="recarga-layout">
 
     <div class="columna-izquierda">
+      <!-- Métodos de pago -->
       <div class="payment-methods card-style anim-fade-in delay-2">
-        <h4 class="section-title"><i class="fas fa-qrcode me-2"></i> Métodos de Pago Disponibles</h4>
-        <div class="metodo yape neon-border-warning">
-          <div class="metodo-header">
-            <img src="assets/images/yape-logo.png" alt="Yape Logo" class="metodo-logo">
-            <h5>Yape</h5>
-          </div>
-          <p class="metodo-instruction">Escanea el código QR o usa el número:</p>
-          <div class="qr-container">
-             <img src="assets/images/qr-yape-simulado.png" alt="Código QR Yape Simulado" class="qr-code">
-             <div class="qr-scan-line"></div>
-             <div class="qr-corner top-left"></div>
-             <div class="qr-corner top-right"></div>
-             <div class="qr-corner bottom-left"></div>
-             <div class="qr-corner bottom-right"></div>
-          </div>
-          <p class="numero-yape">
-            <i class="fas fa-mobile-alt me-2"></i>
-            <strong>Número:</strong>
-            <span class="numero-valor anim-text-glow">987 654 321</span>
-            (Inocencio H.)
-          </p>
-        </div>
-        <div class="metodo disabled">
-          <h5><i class="fas fa-university me-2"></i> Transferencia BCP (Próximamente)</h5>
-        </div>
+         <h4 class="section-title"><i class="fas fa-qrcode me-2"></i> 1. Realiza el Pago</h4>
+         <div class="metodo yape neon-border-warning">
+             <div class="metodo-header">
+               <img src="assets/images/yape-logo.png" alt="Yape Logo" class="metodo-logo">
+               <h5>Yape</h5>
+             </div>
+             <p class="metodo-instruction">Escanea el código QR o usa el número:</p>
+             <div class="qr-container">
+                <img src="assets/images/qr-yape-simulado.png" alt="Código QR Yape Simulado" class="qr-code">
+                <div class="qr-scan-line"></div>
+                <div class="qr-corner top-left"></div>
+                <div class="qr-corner top-right"></div>
+                <div class="qr-corner bottom-left"></div>
+                <div class="qr-corner bottom-right"></div>
+             </div>
+             <p class="numero-yape">
+               <i class="fas fa-mobile-alt me-2"></i>
+               <strong>Número:</strong>
+               <span class="numero-valor anim-text-glow">987 654 321</span>
+               (Inocencio H.)
+             </p>
+         </div>
          <div class="metodo disabled">
-          <h5><i class="fab fa-paypal me-2"></i> PayPal (Próximamente)</h5>
-        </div>
+           <h5><i class="fas fa-university me-2"></i> Transferencia BCP (Próximamente)</h5>
+         </div>
+         <div class="metodo disabled">
+           <h5><i class="fab fa-paypal me-2"></i> PayPal (Próximamente)</h5>
+         </div>
       </div>
-      <div class="instrucciones-finales card-style neon-border-success anim-fade-in delay-3">
-        <h4 class="section-title success"><i class="fas fa-check-double me-2"></i> ¡Paso Final e Importante!</h4>
-        <p>Una vez realizado el pago, <strong>envía tu comprobante</strong> (captura o foto) a nuestro WhatsApp para verificar tu recarga y añadir el saldo a tu cuenta.</p>
+
+       <!-- FORMULARIO DE SOLICITUD -->
+       <div class="solicitud-recarga card-style neon-border-info anim-fade-in delay-3">
+         <h4 class="section-title info"><i class="fas fa-paper-plane me-2"></i> 2. Registra tu Recarga</h4>
+         <p class="text-secondary small mb-3">
+           Completa este formulario <strong>DESPUÉS</strong> de haber realizado el pago para que podamos procesarlo.
+         </p>
+         <form [formGroup]="recargaForm" (ngSubmit)="onSubmit()">
+            <!-- Campo Monto -->
+           <div class="input-group mb-0">
+             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+             <input type="number" class="form-control" placeholder="Monto Recargado (S/)" formControlName="monto" min="1" required>
+           </div>
+           <!-- Mensaje de error para Monto -->
+           <div *ngIf="recargaForm.get('monto')?.invalid && (recargaForm.get('monto')?.dirty || recargaForm.get('monto')?.touched)" class="field-error text-danger mt-1 mb-3">
+              <small *ngIf="recargaForm.get('monto')?.errors?.['required']">El monto es obligatorio.</small>
+              <small *ngIf="recargaForm.get('monto')?.errors?.['min']">El monto debe ser al menos S/ 1.</small>
+           </div>
+
+           <!-- Campo Método de Pago (oculto) -->
+           <input type="hidden" formControlName="metodoPago">
+
+           <!-- Campo URL Comprobante (Opcional) -->
+           <div class="input-group mb-1">
+             <span class="input-group-text"><i class="fas fa-link"></i></span>
+             <input type="text" class="form-control" placeholder="URL de imagen del comprobante (Opcional)" formControlName="comprobanteUrl">
+           </div>
+           <small class="text-secondary d-block mb-3" style="font-size: 0.8rem;">Puedes subir tu imagen a un sitio como imgbb.com y pegar el enlace aquí.</small>
+
+           <!-- Campo Nota (Opcional) -->
+           <div class="input-group mb-3">
+             <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+             <textarea class="form-control" placeholder="Nota adicional (Ej: ID de transacción Yape, Opcional)" formControlName="nota" rows="2"></textarea>
+           </div>
+
+           <!-- Botón Enviar -->
+           <button type="submit" class="btn btn-primary btn-glow w-100" [disabled]="recargaForm.invalid || isLoading">
+              <span *ngIf="!isLoading"><i class="fas fa-paper-plane me-2"></i> Enviar Solicitud de Recarga</span>
+              <span *ngIf="isLoading">
+                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                 Enviando...
+              </span>
+           </button>
+         </form>
+       </div>
+
+      <!-- Instrucciones Finales WhatsApp -->
+      <div class="instrucciones-finales card-style neon-border-success anim-fade-in delay-4">
+        <h4 class="section-title success"><i class="fas fa-check-double me-2"></i> 3. Envía Comprobante por WhatsApp</h4>
+        <p>Una vez realizado el pago Y registrada tu solicitud arriba, <strong>envía tu comprobante</strong> (captura o foto) a nuestro WhatsApp para finalizar la verificación.</p>
         <a href="https://wa.me/TUNUMERO" target="_blank" class="btn btn-success btn-glow btn-pulse">
-           <i class="fab fa-whatsapp me-2"></i> Enviar Comprobante Ahora
+           <i class="fab fa-whatsapp me-2"></i> Enviar Comprobante por WhatsApp
         </a>
       </div>
     </div>
 
+    <!-- Columna derecha -->
     <div class="columna-derecha">
       <div class="info-card card-style neon-border-info anim-fade-in delay-1">
         <div class="info-icon"><i class="fas fa-info-circle"></i></div>
-        <p>Puedes recargar desde <strong>S/ 5.00</strong>. Las recargas se verifican y procesan manualmente por nuestro equipo.</p>
-        <p class="small text-secondary">Tiempo estimado: 5-15 minutos en horario de atención.</p>
+        <p>Puedes recargar desde <strong>S/ 1.00</strong>. Las recargas se verifican y procesan manualmente.</p>
+        <p class="small text-secondary">Tiempo estimado: 5-15 min tras enviar formulario y comprobante WhatsApp (en horario de atención).</p>
       </div>
 
-      <div class="anuncio-card card-style anim-fade-in delay-4 interactive-tilt-card"
-           (mousemove)="onMouseMove($event)"
-           (mouseleave)="onMouseLeave()">
-        <div class="anuncio-glow"></div>
-        <div class="anuncio-content">
-          <i class="fas fa-rocket anuncio-icon"></i>
-          <h4>¡Nuevos Servicios!</h4>
-          <p>Explora nuestro catálogo actualizado con más plataformas y software.</p>
-          <a routerLink="/servicios" class="btn btn-sm btn-outline-light">Ver Catálogo</a>
-        </div>
-      </div>
-
-       <div class="faq-section card-style anim-fade-in delay-5">
+       <div class="faq-section card-style anim-fade-in delay-6">
           <h4 class="section-title secondary"><i class="fas fa-question-circle me-2"></i> Preguntas Frecuentes</h4>
           <details>
-             <summary>¿Cuánto demora la recarga?</summary>
-             <p>Normalmente entre 5 a 15 minutos después de enviar tu comprobante en nuestro horario de atención.</p>
+            <summary>¿Cuánto demora la recarga?</summary>
+            <p>Normalmente 5-15 min tras enviar el formulario y el comprobante por WhatsApp.</p>
           </details>
-           <details>
-             <summary>¿Qué pasa si me equivoco de monto?</summary>
-             <p>Contacta a soporte por WhatsApp inmediatamente para revisar tu caso.</p>
+          <details>
+            <summary>¿Qué pasa si me equivoco de monto?</summary>
+            <p>Contacta a soporte por WhatsApp inmediatamente.</p>
           </details>
-           <details>
-             <summary>¿Hay otros métodos de pago?</summary>
-             <p>Estamos trabajando para añadir más métodos pronto.</p>
+          <details>
+            <summary>¿Hay otros métodos de pago?</summary>
+            <p>Estamos trabajando para añadir más métodos pronto.</p>
           </details>
        </div>
     </div>

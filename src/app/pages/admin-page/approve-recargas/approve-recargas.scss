@@ -1,0 +1,159 @@
+// Importar estilos base de tablas, mensajes, etc.
+@import '../manage-products/manage-products.scss'; // Reutiliza estilos de tabla y mensajes
+
+// Estilos específicos para ApproveRecargas
+.admin-page h2 {
+  // Hereda de manage-products o puedes redefinir
+}
+
+// Estilo para el botón de ver comprobante
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary-color-light); // Color de enlace
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  i {
+    margin-right: 4px;
+  }
+
+  &:hover {
+    color: var(--info-color); // Más brillante al pasar el ratón
+    background-color: var(--bg-surface-hover);
+    text-decoration: underline;
+  }
+}
+
+// Estilos para los botones de acción
+.actions-cell {
+  white-space: nowrap; // Evitar que los botones se partan
+  text-align: right; // Alinear botones a la derecha en desktop
+}
+
+.btn-action {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  margin-left: 0.5rem; // Espacio entre botones
+  color: var(--text-on-primary); // Texto blanco por defecto
+  display: inline-flex; // Para alinear icono y texto
+  align-items: center;
+  gap: 0.4em;
+
+  i {
+    font-size: 0.9em; // Icono un poco más pequeño
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+   &:active:not(:disabled) {
+    filter: brightness(0.9);
+    transform: translateY(0px);
+    box-shadow: none;
+  }
+}
+
+.btn-approve {
+  background-color: var(--success-color);
+  &:hover:not(:disabled) {
+    box-shadow: 0 0 10px var(--success-glow);
+  }
+}
+
+.btn-reject {
+  background-color: var(--danger-color);
+   &:hover:not(:disabled) {
+    box-shadow: 0 0 10px rgba(var(--danger-color-rgb), 0.5);
+   }
+}
+
+// Celda para notas (permitir salto de línea)
+.nota-cell {
+   white-space: normal; // Permitir que la nota ocupe varias líneas
+   max-width: 250px;    // Limitar ancho máximo
+   font-size: 0.85rem;
+   color: var(--text-secondary);
+}
+
+
+// --- Adaptación RESPONSIVE para la tabla ---
+@media (max-width: 991.98px) { // Punto de quiebre (ajustar si es necesario)
+    .futuristic-table {
+        thead {
+          display: none; // Ocultar cabecera original
+        }
+        tbody, tr, td {
+          display: block; // Filas y celdas como bloques
+          width: 100%;
+        }
+        tr {
+          margin-bottom: 1.5rem;
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1rem;
+          background-color: var(--bg-surface);
+          box-shadow: 0 4px 10px var(--shadow-color-soft);
+          position: relative; // Para posicionar acciones
+        }
+        td {
+          border: none;
+          border-bottom: 1px dashed var(--border-color-light); // Línea divisoria
+          padding: 0.8rem 0.5rem 0.8rem 50%; // Padding izquierdo para etiqueta
+          position: relative;
+          white-space: normal;
+          text-align: right; // Valor a la derecha
+
+          &:last-child {
+             border-bottom: none;
+             padding-bottom: 0.5rem; // Menos padding en la última celda (acciones)
+          }
+
+          // Etiqueta (Label)
+          &::before {
+            content: attr(data-label); // Tomar texto del atributo
+            position: absolute;
+            left: 10px;
+            width: 45%; // Ancho de la etiqueta
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.7rem; // Etiqueta más pequeña
+            opacity: 0.8;
+          }
+
+           // Ajuste específico para Acciones en móvil
+           &.actions-cell {
+              text-align: center; // Centrar botones en móvil
+              padding-left: 0.5rem; // Quitar padding izquierdo extra
+              padding-top: 1rem;    // Espacio arriba
+              border-top: 1px solid var(--border-color); // Línea arriba
+              margin-top: 0.5rem;   // Espacio antes de la línea
+
+              &::before { display: none; } // No mostrar etiqueta "Acciones"
+
+              .btn-action {
+                 margin: 0.3rem; // Espacio alrededor de botones
+              }
+           }
+
+           // Ajuste para Comprobante en móvil
+           &[data-label="Comprobante"] {
+              .btn-link {
+                 padding: 0.5rem; // Más área de toque
+              }
+           }
+        } // Fin td
+    } // Fin .futuristic-table @media
+} // Fin @media

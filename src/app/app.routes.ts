@@ -1,27 +1,25 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
+// ... otros imports ...
 import { Home } from './pages/client-page/home/home';
+import { Servicios } from './pages/client-page/servicios/servicios';
 import { Resenas } from './pages/client-page/resenas/resenas';
+import { Login } from './authentication/login/login';
+import { Register } from './authentication/register/register';
+import { DejarResena } from './pages/client-page/dejar-resena/dejar-resena';
+
+import { UserDashboard } from './pages/dashboard-page/user-dashboard/user-dashboard';
+import { DashboardHome } from './pages/dashboard-page/dashboard-home/dashboard-home';
+import { RecargaSaldo } from './pages/dashboard-page/recarga-saldo/recarga-saldo';
+import { MisPedidos } from './pages/dashboard-page/mis-pedidos/mis-pedidos';
+
 import { AdminDashboard } from './pages/admin-page/admin-dashboard/admin-dashboard';
 import { ApproveUsers } from './pages/admin-page/approve-users/approve-users';
 import { ManageProducts } from './pages/admin-page/manage-products/manage-products';
-import { Login } from './authentication/login/login';
-import { Register } from './authentication/register/register';
+import { ApproveRecargas } from './pages/admin-page/approve-recargas/approve-recargas'; // <-- ASEGÚRATE QUE ESTE IMPORT ESTÉ CORRECTO
+import { ManagePedidos } from './pages/admin-page/manage-pedidos/manage-pedidos';
+
 import { AuthGuard } from './core/guards/auth-guard';
 import { AdminGuard } from './core/guards/admin-guard';
-import { DejarResena } from './pages/client-page/dejar-resena/dejar-resena';
-import { Servicios } from './pages/client-page/servicios/servicios';
-
-// --- NUEVOS IMPORTS ---
-import { UserDashboard } from './pages/dashboard-page/user-dashboard/user-dashboard'; // Layout principal del dashboard
-import { DashboardHome } from './pages/dashboard-page/dashboard-home/dashboard-home'; // Vista principal del dashboard
-import { RecargaSaldo } from './pages/dashboard-page/recarga-saldo/recarga-saldo'; // Componente de recarga
-
-// Ya no necesitamos DistributorGuard ni los componentes de distribuidor
-// import { DistributorGuard } from './core/guards/distributor-guard';
-// import { DistributorDashboard } from './pages/distributor-page/distributor-dashboard/distributor-dashboard';
-// import { DistributorCommissions } from './pages/distributor-page/distributor-commissions/distributor-commissions';
-
 
 export const routes: Routes = [
   // --- Rutas Públicas ---
@@ -34,31 +32,34 @@ export const routes: Routes = [
   // --- Rutas Protegidas (Requieren Login) ---
   { path: 'escribir-resena', component: DejarResena, canActivate: [AuthGuard], title: 'Dejar una Reseña' },
 
-  // --- NUEVO PANEL DE CONTROL UNIFICADO ---
+  // --- PANEL DE CONTROL UNIFICADO ---
   {
     path: 'dashboard',
-    component: UserDashboard, // Carga el layout del dashboard
-    canActivate: [AuthGuard], // Protegido por login general
+    component: UserDashboard, // Layout
+    canActivate: [AuthGuard],
     title: 'Mi Panel',
     children: [
-      { path: '', component: DashboardHome, title: 'Dashboard' }, // Ruta por defecto (/dashboard)
+      { path: '', component: DashboardHome, title: 'Dashboard' },
       { path: 'recarga', component: RecargaSaldo, title: 'Recargar Saldo' },
-      // --- Placeholder para futuras rutas ---
-      // { path: 'pedidos', component: MisPedidos, title: 'Mis Pedidos' },
-      // { path: 'productos', component: GestionProductosDist, canActivate: [DistributorGuard], title: 'Gestionar Productos (Dist)' }, // Ejemplo ruta solo para distribuidor
+      { path: 'pedidos', component: MisPedidos, title: 'Mis Pedidos' },
+      // Aquí podrían ir rutas específicas de distribuidor si las hubiera
     ]
   },
 
   // --- Rutas de Administrador (Protegidas por AdminGuard) ---
   {
     path: 'admin',
-    component: AdminDashboard,
+    component: AdminDashboard, // Layout Admin
     canActivate: [AdminGuard],
     title: 'Panel de Administración',
     children: [
       { path: 'usuarios', component: ApproveUsers, title: 'Admin | Aprobar Usuarios' },
       { path: 'productos', component: ManageProducts, title: 'Admin | Gestionar Productos' },
-      { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
+      // **** ASEGÚRATE QUE ESTA LÍNEA ESTÉ AQUÍ ****
+      { path: 'recargas', component: ApproveRecargas, title: 'Admin | Aprobar Recargas' },
+      { path: 'pedidos', component: ManagePedidos, title: 'Admin | Gestionar Pedidos' },
+      // **** FIN VERIFICACIÓN ****
+      { path: '', redirectTo: 'usuarios', pathMatch: 'full' } // Redirige /admin a /admin/usuarios
     ]
   },
 
